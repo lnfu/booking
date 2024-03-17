@@ -1,9 +1,13 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# TimeSlot
+TimeSlot.destroy_all
+# 注意時區問題! (要使用 zone.local 不能直接用 new)
+names = (1..24).to_a.map(&:to_s)
+start_times = (0..23).to_a.map { |hour| Time.zone.local(2000, 1, 1, hour, 0, 0) }
+end_times = (1..24).to_a.map { |hour| Time.zone.local(2000, 1, 1, hour, 0, 0) }
+24.times do |i|
+    TimeSlot.create!(
+        name: names[i],
+        start_at: start_times[i],
+        end_at: end_times[i]
+    )
+end

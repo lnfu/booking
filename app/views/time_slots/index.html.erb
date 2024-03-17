@@ -1,0 +1,38 @@
+<%= link_to t(".new_button_text"), new_time_slot_path, class: "btn btn-primary" %>
+<div id="time_slots">
+  <table class="table table-hover table-bordered table-light w-75">
+    <thead class="table-dark">
+      <tr>
+        <th><%= t(".name") %></th>
+        <th><%= t(".start_time") %></th>
+        <th><%= t(".end_time") %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @time_slots.each do |time_slot| %>
+        <tr>
+          <th><%= time_slot.name %></th>
+          <th><%= time_slot.start_at.strftime("%H:%M") %></th>
+          <th><%= time_slot.end_at.strftime("%H:%M") %></th>
+          <th>
+            <div class="d-flex">
+                <%= 
+                    link_to t(".edit_button_text"), 
+                    edit_time_slot_path(time_slot), 
+                    class: "btn btn-dark" 
+                %>
+                <%= 
+                    link_to t(".delete_button_text"), 
+                    time_slot, 
+                    method: :delete,
+                    data: { turbo_method: :delete, turbo_confirm: "Sure?" },
+                    class: "btn btn-danger" 
+                %>
+            </div>
+          </th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

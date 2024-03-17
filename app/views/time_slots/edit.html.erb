@@ -1,0 +1,5 @@
+<h1><%= t(".title") %>: <%= @time_slot.name %></h1>
+<%= render "form", time_slot: @time_slot %>
+<div>
+  <%= link_to t(".back_all_button_text"), time_slots_path, class: "btn" %>
+</div>
