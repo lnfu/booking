@@ -1,0 +1,20 @@
+<div id="rooms">
+  <table class="table table-hover table-bordered table-light w-75">
+    <thead class="table-dark">
+      <tr>
+        <th><%= t("room")%></th>
+        <th><%= t(".door_lock_password")%></th>
+        <th><%= t(".color")%></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @rooms.each do |room| %>
+        <tr>
+          <td><%= room.name %></td>
+          <td><%= room.password %></td>
+          <td><%= room.color %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
