@@ -44,7 +44,7 @@ class SessionController < ApplicationController
     uri = URI("#{Rails.application.config.oauth_server}/o/token/")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     access_request = Net::HTTP::Post.new(uri)
     access_request.set_form_data({
       "grant_type" => "authorization_code",
