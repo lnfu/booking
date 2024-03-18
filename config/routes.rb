@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root "session#new"
+
   resources :time_slots, only: [ :index, :new, :delete, :destroy, :edit ]
   resources :rooms, only: [ :index ]
   resources :users, only: [ :index, :delete, :destroy ] do

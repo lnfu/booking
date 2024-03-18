@@ -1,0 +1,19 @@
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <%= current_user&.name %>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li class="nav-item">
+      <%= link_to(t("navbar.profile"), profile_path, class: "btn") %>
+    </li>
+    <li class="nav-item">
+      <%= link_to(
+                  t("navbar.logout_button_text"), 
+                  logout_path, 
+                  method: :delete,
+                  data: { turbo_method: :delete, turbo_confirm: "Sure?" }, 
+                  class: "btn"
+                ) %>
+    </li>
+  </ul>
+</li>

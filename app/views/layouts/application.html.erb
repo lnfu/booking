@@ -6,9 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -16,8 +14,20 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
-
   <body>
-    <%= yield %>
+      <%= render "layouts/navbar" %>
+
+    <div class="container-fluid my-1">
+      <% if flash[:notice] %>
+        <div class="alert alert-info" role="alert"><%= flash[:notice] %></div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="alert alert-danger" role="alert"><%= flash[:alert] %></div>
+      <% end %>
+      <%= yield %>
+      <footer class="text-center mb-3">
+        <span>&copy; 2024 Enfu Liao. All rights reserved.</span>
+      </footer>
+    </div>
   </body>
 </html>

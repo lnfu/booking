@@ -1,4 +1,5 @@
 require "net/http"
+require "bcrypt"
 
 class SessionController < ApplicationController
   def new
@@ -9,9 +10,9 @@ class SessionController < ApplicationController
     when "password"
       user = User.find_by(name: params[:name])
       if !!user && user.authenticate(params[:password])
-        p ("fdksal")
-        p (user.id)
         create_session(user.id)
+      else
+        redirect_to login_path, alert: "Incorrect student ID or password"
       end
     when "oauth"
       redirect_to(authorization_url, allow_other_host: true)
@@ -27,8 +28,7 @@ class SessionController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to login_path
-    # TODO redirect_to root_path
+    redirect_to root_path, notice: "Logout successfully."
   end
 
   private
@@ -76,7 +76,7 @@ class SessionController < ApplicationController
       user.email = email
       user.nickname = name
       user.role = :guest
-      user.password_digest = SecureRandom.hex(10)
+      user.password_digest =BCrypt::Password.create(SecureRandom.hex(10))
       user.save
     end
 
@@ -85,7 +85,6 @@ class SessionController < ApplicationController
 
   def create_session(id)
     session[:user_id] = id
-    redirect_to login_path
-    # TODO redirect_to root_path
+    redirect_to root_path, notice: "Login successfully."
   end
 end
