@@ -1,0 +1,39 @@
+<div id="users">
+  <table class="table table-hover table-bordered table-light w-75">
+    <thead class="table-dark">
+      <tr>
+        <th><%= t("username") %></th>
+        <th><%= t("nickname") %></th>
+        <th><%= t("email") %></th>
+        <th><%= t(".verification_status") %></th>
+        <th><%= t(".admin") %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.nickname %></td>
+          <td><%= user.email %></td>
+          <td>
+            <%= user_verification_button(user) %>
+          </td>
+          <td>
+            <%= user.role %>
+            <%= user.password_digest %>
+          </td>
+          <td>
+            <%= 
+              link_to t(".delete_button_text"), 
+              user, 
+              method: :delete,
+              data: { turbo_method: :delete, turbo_confirm: "Sure?" },
+              class: "btn btn-danger" 
+            %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

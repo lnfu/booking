@@ -1,0 +1,44 @@
+<div>SESSION ID: <%= session[:user_id] %></div>
+<div>CURRENT USER: <%= current_user&.name %></div>
+<div>CURRENT EMAIL: <%= current_user&.email %></div>
+<div>CURRENT NICKNAME: <%= current_user&.nickname %></div>
+<div>CURRENT PASSWORD: <%= current_user&.password %></div>
+<div>CURRENT ROLE: <%= current_user&.role %></div>
+
+<%= form_tag "/login" do %>
+  <%= hidden_field_tag(:login_method, 'password') %>
+  <div>
+    <%= label_tag(:name, t(".name")) %>
+    <%= text_field_tag(:name) %>
+  </div>
+  <div>
+    <%= label_tag(:password, t(".password")) %>
+    <%= password_field_tag(:password) %>
+  </div>
+  <div>
+    <%= submit_tag(t(".submit_button_text"), class: "btn btn-primary") %>
+  </div>
+<% end %>
+
+<div class="text-center my-5 py-5">
+  <div class="mx-auto rounded bg-light px-5 py-5">
+    <h1 class="display-5 fw-bold my-4"><%= t(".login") %></h1>
+    <%= button_to(
+      "NYCU OAuth2", 
+      login_path, method: :post, 
+      params: { login_method: 'oauth' },
+      data: {turbo: "false"}, 
+      class: "btn btn-primary px-5 py-3"
+    ) %>
+  </div>
+</div>
+
+<div class="text-center my-5 py-5">
+  <%= link_to(
+    t("navbar.logout_button_text"), 
+    logout_path, 
+    method: :delete,
+    data: { turbo_method: :delete, turbo_confirm: "Sure?" }, 
+    class: "btn btn-danger"
+  ) %>
+</div>
