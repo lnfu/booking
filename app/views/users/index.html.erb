@@ -17,11 +17,10 @@
           <td><%= user.nickname %></td>
           <td><%= user.email %></td>
           <td>
-            <%= user_verification_button(user) %>
+            <%= verification_button(user) %>
           </td>
           <td>
-            <%= user.role %>
-            <%= user.password_digest %>
+            <%= admin_button(user) %>
           </td>
           <td>
             <%= 

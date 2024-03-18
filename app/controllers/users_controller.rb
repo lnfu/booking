@@ -16,10 +16,10 @@ class UsersController < ApplicationController
         update_user_role("regular")
     end
 
-    def downgrade_regular_to_guest
-        check_user_role("regular")
-        update_user_role("guest")
-    end
+    # def downgrade_regular_to_guest
+    #     check_user_role("regular")
+    #     update_user_role("guest")
+    # end
 
     def upgrade_regular_to_admin
         check_user_role("regular")

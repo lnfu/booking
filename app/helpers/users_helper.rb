@@ -1,5 +1,5 @@
 module UsersHelper
-    def user_verification_button(user)
+    def verification_button(user)
         if user.guest?
             link_to(
                 t(".verify"),
@@ -10,6 +10,21 @@ module UsersHelper
             )
         else
             t(".verified")
+        end
+    end
+
+    def admin_button(user)
+        if user.guest?
+        elsif user.regular?
+            link_to(
+                t(".set_admin"),
+                upgrade_regular_to_admin_user_path(user.id),
+                method: :patch,
+                data: { turbo_method: :patch, turbo_confirm: "Sure?" },
+                class: "btn btn-primary"
+            )
+        elsif user.admin?
+            t(".admin")
         end
     end
 
