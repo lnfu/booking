@@ -16,12 +16,15 @@ end
 
 # Room
 Room.destroy_all
-Rails.application.credentials.rooms.each do |room|
-  Room.create!(
-    name: room[:name],
-    password: room[:password],
-    color: '#FFFFFF'
-  )
+room = Rails.application.credentials.rooms
+if room.present?
+  room.each do |room|
+    Room.create!(
+      name: room[:name],
+      password: room[:password],
+      color: '#FFFFFF'
+    )
+  end
 end
 
 # User
