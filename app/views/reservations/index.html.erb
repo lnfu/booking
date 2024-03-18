@@ -1,0 +1,40 @@
+<div id="reservations">
+  <table class="table table-hover table-bordered table-light">
+    <thead class="table-dark">
+      <tr>
+        <th>
+          <%= t("room") %>
+        </th>
+        <th>
+          <%= t("username") %>
+        </th>
+        <th>
+          <%= t("time_slot") %>
+        </th>
+        <th>
+          <%= t(".date") %>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reservations.each do |reservation| %>
+        <tr>
+          <td><%= reservation.room.name %></td>
+          <td><%= reservation.user.name %></td>
+          <td><%= "#{reservation.time_slot.start_at.strftime("%I:%M %p")} - #{reservation.time_slot.end_at.strftime("%I:%M %p")}" %></td>
+          <td><%= reservation.date %></td>
+          <td>
+            <%= 
+                link_to t(".delete_button_text"), 
+                reservation, 
+                method: :delete,
+                data: { turbo_method: :delete, turbo_confirm: "Sure?" },
+                class: "btn btn-danger" 
+            %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

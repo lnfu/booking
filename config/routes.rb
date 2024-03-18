@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       # patch "downgrade_admin_to_regular"
     end
   end
+  resources :reservations, only: [ :index, :create, :destroy ]
   resource :profile, controller: :profile, only: [ :show, :update ]
 
   # session

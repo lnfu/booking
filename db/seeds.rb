@@ -16,9 +16,9 @@ end
 
 # Room
 Room.destroy_all
-room = Rails.application.credentials.rooms
-if room.present?
-  room.each do |room|
+rooms = Rails.application.credentials.rooms
+if rooms.present?
+  rooms.each do |room|
     Room.create!(
       name: room[:name],
       password: room[:password],
@@ -50,3 +50,21 @@ User.create!(
   role: :admin,
   password_digest: BCrypt::Password.create('333333')
 )
+
+# Reservation
+Reservation.destroy_all
+user = User.find_by(name: '222222222') # 2號使用者
+if user.present?
+  rooms = Room.all
+  today = Date.today
+  rooms.each do |room|
+    TimeSlot.all.each do |time_slot|
+      Reservation.create!(
+        user_id: user.id,
+        room_id: room.id,
+        time_slot_id: time_slot.id,
+        date: today
+      )
+    end
+  end
+end
