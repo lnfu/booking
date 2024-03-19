@@ -83,4 +83,6 @@ Rails.application.configure do
   config.oauth_scope = "profile"
   config.assume_ssl = false
   config.force_ssl = false
+
+  config.default_room = "409"
 end
