@@ -2,6 +2,7 @@ class ReservationsController < ApplicationController
     before_action :set_reservation, only: %i[ destroy ]
     before_action :set_room, only: %i[ create ]
     before_action :set_date, only: %i[ create ]
+    before_action :require_login
 
     def index
         @reservations = Reservation.includes(:user, :room, :time_slot).all

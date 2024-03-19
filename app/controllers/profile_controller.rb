@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
     before_action :set_user, only: [ :show, :update ]
+    before_action :require_login
 
     def show
         redirect_to login_path if !current_user

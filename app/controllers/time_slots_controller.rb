@@ -1,5 +1,6 @@
 class TimeSlotsController < ApplicationController
     before_action :set_time_slot, only: %i[ destroy edit ]
+    before_action :require_login
 
     def index
         @time_slots = TimeSlot.all
