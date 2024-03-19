@@ -12,9 +12,9 @@ en:
   cancel_button_text: Cancel
   nickname: Nickname
   navbar:
-    profile: Profile
     logout_button_text: Logout
     login_button_text: Login
+    profile: Profile
   boards:
     show:
       book_button_text: Reserve
@@ -61,9 +61,9 @@ en:
     new:
       login: Login
       oauth_hint_text: or sign in with OAuth
-  profile:
-    show:
-      profile: Profile
     form:
       nickname: Nickname
       submit_button_text: Submit
+  profile:
+    form:
+      submit_button_text: Save
