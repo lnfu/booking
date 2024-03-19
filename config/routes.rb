@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     end
   end
   resources :reservations, only: [ :index, :create, :delete, :destroy ]
+  get "/my_reservation", to: "reservations#show", as: "my_reservation"
+
   resource :profile, controller: :profile, only: [ :show, :update ]
   get "/boards", to: "boards#index", as: :board_main
   get "/boards/:id/:year/:month/:day", to: "boards#show",

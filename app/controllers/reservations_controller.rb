@@ -8,6 +8,11 @@ class ReservationsController < ApplicationController
         @reservations = Reservation.includes(:user, :room, :time_slot).all
     end
 
+    def show
+        @reservations = Reservation.includes(:user, :room, :time_slot).where(user: current_user)
+        render :index
+    end
+
     def create
         @reservation = Reservation.new(
             user_id: current_user.id,
