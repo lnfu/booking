@@ -3,6 +3,14 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   helper_method :current_user
   helper_method :logged_in?
+  layout :set_layout
+  def set_layout
+     if logged_in?
+       "application"
+     else
+       "login"
+     end
+  end
 
   protected
 
@@ -15,6 +23,10 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    redirect_to login_path unless logged_in?
+    redirect_to login_path, alert: "Please login first." unless logged_in?
+  end
+
+  def require_admin
+    redirect_to root_path, alert: "You are not admin." unless current_user&.admin?
   end
 end

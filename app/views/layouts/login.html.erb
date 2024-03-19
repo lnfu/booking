@@ -15,19 +15,8 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
   <body>
-      <%= render "layouts/navbar" %>
-
-    <div class="container-fluid">
-      <% if flash[:notice] %>
-        <div class="alert alert-info" role="alert"><%= flash[:notice] %></div>
-      <% end %>
-      <% if flash[:alert] %>
-        <div class="alert alert-danger" role="alert"><%= flash[:alert] %></div>
-      <% end %>
+    <div class="container-fluid p-0">
       <%= yield %>
-      <footer class="text-center" style="height: 30px;">
-        <span>&copy; 2024 Enfu Liao. All rights reserved.</span>
-      </footer>
     </div>
   </body>
 </html>

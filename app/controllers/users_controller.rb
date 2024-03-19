@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
     before_action :set_user, except: %i[ index ]
     before_action :require_login
+    before_action :require_admin
 
     def index
         @users = User.all
