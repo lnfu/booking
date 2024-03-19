@@ -1,10 +1,12 @@
 <table class="table table-bordered table-fixed table-hover">
   <thead class="text-center">
     <tr>
-      <th>
+      <th style="min-width: 150px;">
         <div class="mx-auto py-2">
-          <%= link_to(raw("&#8249;"), board_path(@room.name, @prev_week_date.year, @prev_week_date.month, @prev_week_date.day), class: "btn-prev") %>
-          <%= link_to(raw("&#8250;"), board_path(@room.name, @next_week_date.year, @next_week_date.month, @next_week_date.day), class: "btn-next") %>
+          <%= link_to(raw("&#9665;"), board_path(@room.name, @prev_week_date.year, @prev_week_date.month, @prev_week_date.day), class: "text-decoration-none text-dark display-6") %>
+          &nbsp;
+          &nbsp;
+          <%= link_to(raw("&#9655;"), board_path(@room.name, @next_week_date.year, @next_week_date.month, @next_week_date.day), class: "text-decoration-none text-dark display-6") %>
         </div>
       </th>
       <% @week_dates.each do |week_date| %>
@@ -35,8 +37,8 @@
     text-align: center;
     display: inline-block;
     text-decoration: none;
-    background-color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
-    color: white;
+    background-color: rgba(var(--bs-light-rgb), var(--bs-link-opacity, 1));
+    color: var(--bs-dark-rgb);
     border-radius: 15px;
   }
 </style>

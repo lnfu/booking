@@ -1,31 +1,69 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  booking: Piano Room Reservation System
+  username: Student ID
+  email: Email
+  room: Rooms
+  user: Users
+  time_slot: Time Slots
+  reservation: Reservations
+  my_reservation: My Reservations
+  delete_button_text: Delete
+  edit_button_text: Edit
+  cancel_button_text: Cancel
+  nickname: Nickname
+  navbar:
+    profile: Profile
+    logout_button_text: Logout
+    login_button_text: Login
+  boards:
+    show:
+      book_button_text: Reserve
+      cancel_button_text: Cancel Reservation
+  reservations:
+    index:
+      date: Date
+  rooms:
+    index:
+      door_lock_password: Door Lock Passwords
+  time_slots:
+    time_slot:
+      name: Name
+      start_time: Start Time
+      end_time: End Time
+    index:
+      name: Name
+      start_time: Start Time
+      end_time: End Time
+      details_button_text: Details
+      new_button_text: New Time Slot
+    show:
+      back_button_text: Back
+    new:
+      title: New Time Slot
+      back_all_button_text: Back to all time slots
+    edit:
+      title: Editing Time Slot
+      back_one_button_text: Back to this time slot
+      back_all_button_text: Back to all time slots
+    form:
+      name: Name
+      submit_button_text: Submit
+      start_time: Start Time
+      end_time: End Time
+  users:
+    index:
+      verification_status: Verification Status
+      verify: Verify
+      verified: Verified
+      admin: Admin
+      set_admin: Set as Admin
+  session:
+    new:
+      login: Login
+      oauth_hint_text: or sign in with OAuth
+  profile:
+    show:
+      profile: Profile
+    form:
+      nickname: Nickname
+      submit_button_text: Submit

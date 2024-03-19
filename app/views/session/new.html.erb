@@ -1,6 +1,6 @@
 <div class="mask text-light">
   <div class="text-center px-5 py-5">
-    <div class="mx-auto rounded px-5 py-5 w-50 mt-5" style="backdrop-filter: brightness(60%);">
+    <div class="mx-auto rounded px-5 py-5 mt-5" style="backdrop-filter: brightness(60%); max-width: 900px;">
       <h1 class="display-5 fw-bold my-4"><%= t(".login") %></h1>
       <%= form_tag "/login", class: "my-2" do %>
         <%= hidden_field_tag(:login_method, 'password') %>
@@ -16,9 +16,10 @@
             <%= password_field_tag(:password, nil, placeholder: "Enter your password...",class: "form-control") %>
           </div>
         </div>
-        <%= submit_tag(t(".submit_button_text"), class: "btn btn-primary px-5 py-2 w-100") %>
+        <%= submit_tag(t(".login"), class: "btn btn-primary px-5 py-2 w-100") %>
       <% end %>
       <hr>
+      <p><%= t(".oauth_hint_text") %></p>
       <%= button_to(
       "NYCU OAuth2", 
       login_path, method: :post, 

@@ -20,12 +20,12 @@
           <td>
             <div class="d-flex">
                 <%= 
-                    link_to t(".edit_button_text"), 
+                    link_to t("edit_button_text"), 
                     edit_time_slot_path(time_slot), 
                     class: "btn btn-dark" 
                 %>
                 <%= 
-                    link_to t(".delete_button_text"), 
+                    link_to t("delete_button_text"), 
                     time_slot, 
                     method: :delete,
                     data: { turbo_method: :delete, turbo_confirm: "Sure?" },

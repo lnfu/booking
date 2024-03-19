@@ -1,0 +1,68 @@
+"zh-TW":
+  booking: 琴房預約系統
+  username: 學號
+  email: 郵件
+  room: 琴房
+  user: 使用者
+  time_slot: 時段
+  reservation: 預約
+  my_reservation: 我的預約
+  delete_button_text: 刪除
+  edit_button_text: 編輯
+  cancel_button_text: 取消
+  nickname: 暱稱
+  navbar:
+    logout_button_text: 登出
+    login_button_text: 登入
+  boards:
+    show:
+      book_button_text: 預約
+      cancel_button_text: 取消預約
+  reservations:
+    index:
+      date: 日期
+  rooms:
+    index:
+      door_lock_password: 門鎖密碼
+  time_slots:
+    time_slot:
+      name: 時段名稱
+      start_time: 開始時間
+      end_time: 結束時間
+    index:
+      name: 時段名稱
+      start_time: 開始時間
+      end_time: 結束時間
+      details_button_text: 詳細資料
+      new_button_text: 新增時段
+    show:
+      back_button_text: 回到所有時段
+    new:
+      title: 新增時段
+      back_all_button_text: 回到所有時段
+    edit:
+      title: 編輯時段
+      back_one_button_text: 回到當前時段
+      back_all_button_text: 回到所有時段
+    form:
+      name: 時段名稱
+      submit_button_text: 儲存
+      start_time: 開始時間
+      end_time: 結束時間
+  users:
+    index:
+      verification_status: 社員
+      verify: 認證
+      verified: 已認證為社員
+      admin: 管理員
+      set_admin: 設為管理員
+  session:
+    new:
+      login: 登入
+      oauth_hint_text: 或是用 OAuth 登入
+  profile:
+    show:
+      profile: 個人資料
+    form:
+      nickname: 暱稱
+      submit_button_text: 儲存
