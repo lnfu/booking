@@ -12,7 +12,8 @@ services:
     ports:
       - "5432:5432"
   web:
-    build: .
+    # build: .
+    image: ghcr.io/lnfu/booking:latest
     command: "./bin/rails server"
     environment:
       - RAILS_ENV=${RAILS_ENV}
