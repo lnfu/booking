@@ -7,7 +7,7 @@ on:
 
 jobs:
   scan_ruby:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -23,7 +23,7 @@ jobs:
         run: bin/brakeman --no-pager
 
   lint:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
         run: bin/rubocop -f github
 
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     services:
       postgres:
@@ -87,7 +87,7 @@ jobs:
   build:
     needs: [scan_ruby, lint, test]
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
