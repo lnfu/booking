@@ -14,6 +14,9 @@
 
 ## Known Issues
 
+1. Deleting a user does not delete all reservations associated with that user.
+
+
 ## Release Notes
 
 ## Planned Features

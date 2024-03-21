@@ -29,42 +29,33 @@ end
 
 # User
 User.destroy_all
-User.create!(
-  name: '111111111',
-  email: 'test.guest@nycu.edu.tw',
-  nickname: '測試用訪客帳號',
-  role: :guest,
-  password_digest: BCrypt::Password.create('111111')
-)
-User.create!(
-  name: '222222222',
-  email: 'test.regular@nycu.edu.tw',
-  nickname: '測試用一般帳號',
-  role: :regular,
-  password_digest: BCrypt::Password.create('222222')
-)
-User.create!(
-  name: '333333333',
-  email: 'test.admin@nycu.edu.tw',
-  nickname: '測試用管理員帳號',
-  role: :admin,
-  password_digest: BCrypt::Password.create('333333')
-)
+users = Rails.application.credentials.users
+if users.present?
+  users.each do |user|
+    User.create!(
+      name: user[:name],
+      email: user[:email],
+      nickname: user[:nickname],
+      role: user[:role],
+      password_digest: BCrypt::Password.create(user[:password])
+    )
+  end
+end
 
 # Reservation
 Reservation.destroy_all
-user = User.find_by(name: '222222222') # 2號使用者
-if user.present?
-  rooms = Room.all
-  today = Date.today
-  rooms.each do |room|
-    TimeSlot.all.each do |time_slot|
-      Reservation.create!(
-        user_id: user.id,
-        room_id: room.id,
-        time_slot_id: time_slot.id,
-        date: today
-      )
-    end
-  end
-end
+# user = User.find_by(name: '222222222') # 2號使用者
+# if user.present?
+#   rooms = Room.all
+#   today = Date.today
+#   rooms.each do |room|
+#     TimeSlot.all.each do |time_slot|
+#       Reservation.create!(
+#         user_id: user.id,
+#         room_id: room.id,
+#         time_slot_id: time_slot.id,
+#         date: today
+#       )
+#     end
+#   end
+# end

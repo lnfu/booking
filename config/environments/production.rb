@@ -94,4 +94,13 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # NYCU OAUTH
+  config.app_url = "http://127.0.0.1:3000"
+  config.oauth_server = "https://id.nycu.edu.tw"
+  config.oauth_scope = "profile"
+  config.assume_ssl = false
+  config.force_ssl = false
+
+  config.default_room = "409"
 end
