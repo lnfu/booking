@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   scan_ruby:
@@ -85,6 +85,8 @@ jobs:
           if-no-files-found: ignore
 
   build:
+    needs: [scan_ruby, lint, test]
+
     runs-on: ubuntu-latest
 
     steps:
