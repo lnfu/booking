@@ -40,3 +40,7 @@
 /node_modules
 
 /config/credentials/production.key
+
+# ansible
+/ansible/roles/booking/files/.env
+/ansible/host.ini

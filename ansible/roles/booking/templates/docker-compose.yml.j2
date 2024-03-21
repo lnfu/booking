@@ -1,4 +1,3 @@
-version: "3"
 services:
   db:
     container_name: booking_postgres
@@ -19,9 +18,8 @@ services:
     ports:
       - "80:80"
   app:
-    build: .
     container_name: booking_app
-    # image: ghcr.io/lnfu/booking:latest
+    image: ghcr.io/lnfu/booking:latest
     command: "./bin/rails server"
     environment:
       - RAILS_ENV=${RAILS_ENV}
@@ -41,3 +39,8 @@ services:
 volumes:
   postgres_data: {}
   app_storage: {}
+
+networks:
+  default:
+    name: booking_network
+    external: true

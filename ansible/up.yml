@@ -1,0 +1,6 @@
+---
+- name: "Setup production environment (nginx + postgres)"
+  hosts: google_cloud
+  roles:
+    - { role: common, become: true }
+    - { role: booking, become: true }
