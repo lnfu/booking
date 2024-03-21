@@ -107,3 +107,17 @@ jobs:
           push: true
           tags: |
             ghcr.io/lnfu/booking:latest
+
+  deploy:
+    needs: [scan_ruby, lint, test]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Executing remote ssh commands using private key
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: whoami            
