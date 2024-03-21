@@ -109,7 +109,7 @@ jobs:
             ghcr.io/lnfu/booking:latest
 
   deploy:
-    needs: [scan_ruby, lint, test]
+    needs: [build]
 
     runs-on: ubuntu-latest
 
