@@ -8,7 +8,6 @@ class UsersController < ApplicationController
     end
 
     def destroy
-        # TODO 刪除 callback (連帶刪除相關的資料)
         @user.destroy!
         redirect_to users_url, notice: "User was successfully destroyed."
     end

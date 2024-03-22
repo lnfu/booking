@@ -22,7 +22,6 @@ class TimeSlotsController < ApplicationController
     end
 
     def destroy
-        # TODO 刪除 callback (連帶刪除相關的資料)
         @time_slot.destroy!
         redirect_to time_slots_url, notice: "Time slot was successfully destroyed."
     end

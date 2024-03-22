@@ -3,6 +3,7 @@ require "bcrypt"
 
 class SessionController < ApplicationController
   def new
+    # TODO: if login then redirect to ... (maybe profile?)
   end
 
   def create

@@ -12,14 +12,15 @@
 
 ![login demo](docs/login.gif)
 
+## Architecture
+
+![architecture](docs/architecture.png)
+
 ## Known Issues
-
-1. Deleting a user does not delete all reservations associated with that user.
-
 
 ## Release Notes
 
 ## Planned Features
 
 - [ ] Responsive Web Design (RWD) for mobile devices
-- [ ] Dockerization
+- [x] Dockerization
