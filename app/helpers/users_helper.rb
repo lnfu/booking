@@ -5,7 +5,7 @@ module UsersHelper
                 t(".verify"),
                 upgrade_guest_to_regular_user_path(user.id),
                 method: :patch,
-                data: { turbo_method: :patch, turbo_confirm: "Sure?" },
+                data: { turbo_method: :patch, turbo_confirm: t("confirm") },
                 class: "btn btn-primary"
             )
         else
@@ -20,7 +20,7 @@ module UsersHelper
                 t(".set_admin"),
                 upgrade_regular_to_admin_user_path(user.id),
                 method: :patch,
-                data: { turbo_method: :patch, turbo_confirm: "Sure?" },
+                data: { turbo_method: :patch, turbo_confirm: t("confirm") },
                 class: "btn btn-primary"
             )
         elsif user.admin?

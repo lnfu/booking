@@ -1,5 +1,23 @@
 require 'bcrypt'
 
+# Reservation
+Reservation.destroy_all
+# user = User.find_by(name: '222222222') # 2號使用者
+# if user.present?
+#   rooms = Room.all
+#   today = Date.today
+#   rooms.each do |room|
+#     TimeSlot.all.each do |time_slot|
+#       Reservation.create!(
+#         user_id: user.id,
+#         room_id: room.id,
+#         time_slot_id: time_slot.id,
+#         date: today
+#       )
+#     end
+#   end
+# end
+
 # TimeSlot
 TimeSlot.destroy_all
 # 注意時區問題! (要使用 zone.local 不能直接用 new)
@@ -41,21 +59,3 @@ if users.present?
     )
   end
 end
-
-# Reservation
-Reservation.destroy_all
-# user = User.find_by(name: '222222222') # 2號使用者
-# if user.present?
-#   rooms = Room.all
-#   today = Date.today
-#   rooms.each do |room|
-#     TimeSlot.all.each do |time_slot|
-#       Reservation.create!(
-#         user_id: user.id,
-#         room_id: room.id,
-#         time_slot_id: time_slot.id,
-#         date: today
-#       )
-#     end
-#   end
-# end

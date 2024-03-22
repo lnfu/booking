@@ -12,6 +12,9 @@ en:
   cancel_button_text: Cancel
   nickname: Nickname
   date: Date
+  confirm_delete: Are you sure you want to delete?
+  confirm_logout: Are you sure you want to log out?
+  confirm: Sure?
   navbar:
     logout_button_text: Logout
     login_button_text: Login

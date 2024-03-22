@@ -12,6 +12,9 @@
   cancel_button_text: 取消
   nickname: 暱稱
   date: 日期
+  confirm_delete: 確定刪除嗎?
+  confirm_logout: 確定登出嗎?
+  confirm: 確定?
   navbar:
     logout_button_text: 登出
     login_button_text: 登入

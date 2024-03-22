@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def logged_in?
-    !!session[:user_id]
+    !!session[:user_id] && User.exists?(session[:user_id])
   end
 
   def current_user

@@ -27,7 +27,7 @@
               link_to t("delete_button_text"), 
               user, 
               method: :delete,
-              data: { turbo_method: :delete, turbo_confirm: "Sure?" },
+              data: { turbo_method: :delete, turbo_confirm: t("confirm_delete") },
               class: "btn btn-danger" 
             %>
           </td>

@@ -11,7 +11,7 @@
                   t("navbar.logout_button_text"), 
                   logout_path, 
                   method: :delete,
-                  data: { turbo_method: :delete, turbo_confirm: "Sure?" }, 
+                  data: { turbo_method: :delete, turbo_confirm: t("confirm_logout") }, 
                   class: "btn"
                 ) %>
     </li>
