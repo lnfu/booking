@@ -3,6 +3,7 @@ class ReservationsController < ApplicationController
     before_action :set_room, only: %i[ create ]
     before_action :set_date, only: %i[ create ]
     before_action :require_login
+    before_action :require_non_guest
     before_action :require_admin, except: %i[ show create destroy ]
 
     def index

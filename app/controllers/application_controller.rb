@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
     redirect_to login_path, alert: "Please login first." unless logged_in?
   end
 
+  def require_non_guest
+    redirect_to root_path, alert: "You are not verified." if current_user&.guest?
+  end
+
   def require_admin
     redirect_to root_path, alert: "You are not admin." unless current_user&.admin?
   end
