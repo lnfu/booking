@@ -11,6 +11,7 @@ en:
   edit_button_text: Edit
   cancel_button_text: Cancel
   nickname: Nickname
+  date: Date
   navbar:
     logout_button_text: Logout
     login_button_text: Login
@@ -20,11 +21,13 @@ en:
       book_button_text: Reserve
       cancel_button_text: Cancel Reservation
   reservations:
-    index:
-      date: Date
   rooms:
     index:
-      door_lock_password: Door Lock Passwords
+    regular_head:
+      door_lock_password: Door Lock Password
+    admin_head:
+      door_lock_password: Door Lock Password
+      color: Color
   time_slots:
     time_slot:
       name: Name

@@ -11,6 +11,7 @@
   edit_button_text: 編輯
   cancel_button_text: 取消
   nickname: 暱稱
+  date: 日期
   navbar:
     logout_button_text: 登出
     login_button_text: 登入
@@ -20,15 +21,13 @@
       book_button_text: 預約
       cancel_button_text: 取消預約
   reservations:
-    index:
-      date: 日期
   rooms:
     index:
     regular_head:
       door_lock_password: 門鎖密碼
     admin_head:
       door_lock_password: 門鎖密碼
-      color: 代表顏色
+      color: 顏色
   time_slots:
     time_slot:
       name: 時段名稱

@@ -6,9 +6,6 @@
           <%= t("room") %>
         </th>
         <th>
-          <%= t("username") %>
-        </th>
-        <th>
           <%= t("time_slot") %>
         </th>
         <th>
@@ -21,7 +18,6 @@
       <% @reservations.each do |reservation| %>
         <tr>
           <td><%= reservation.room.name %></td>
-          <td><%= reservation.user.name %></td>
           <td><%= "#{reservation.time_slot.start_at.strftime("%I:%M %p")} - #{reservation.time_slot.end_at.strftime("%I:%M %p")}" %></td>
           <td><%= reservation.date %></td>
           <td>

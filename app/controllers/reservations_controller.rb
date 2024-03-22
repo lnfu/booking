@@ -11,7 +11,7 @@ class ReservationsController < ApplicationController
 
     def show
         @reservations = Reservation.includes(:user, :room, :time_slot).where(user: current_user)
-        render :index
+        render :show
     end
 
     def create
