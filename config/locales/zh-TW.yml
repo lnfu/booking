@@ -24,7 +24,11 @@
       date: 日期
   rooms:
     index:
+    regular_head:
       door_lock_password: 門鎖密碼
+    admin_head:
+      door_lock_password: 門鎖密碼
+      color: 代表顏色
   time_slots:
     time_slot:
       name: 時段名稱
