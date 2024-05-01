@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :time_slots, only: [ :index, :create, :new, :delete, :destroy, :edit ]
+  resources :rooms, only: [ :index, :create, :new, :delete, :destroy, :edit ]
 end

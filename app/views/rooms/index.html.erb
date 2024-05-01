@@ -1,0 +1,38 @@
+<table class="w-full text-left border-collapse bg-slate-50">
+  <thead>
+    <tr>
+      <th class="px-8 py-4 text-xl">房間</th>
+      <th class="px-8 py-4 text-xl">密碼</th>
+      <th class="px-8 py-4 text-xl">顏色</th>
+      <th class="px-8 py-4 text-xl"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="px-8" colspan="4"><%= link_to "新增房間", new_room_path, class: "text-blue-500"%></td>
+    </tr>
+    <% @rooms.each do |room| %>
+      <tr class="border-t border-slate-200">
+        <td class="px-8 py-2"><%= room.name %></td>
+        <td class="px-8 py-2"><%= room.password %></td>
+        <td class="px-8 py-2"><%= room.color %></td>
+        <td class="px-8 py-2">
+          <div>
+            <%= 
+              link_to "編輯", 
+              edit_room_path(room),
+              class: "bg-blue-500 px-3 py-2 rounded text-white"
+            %>
+            <%= 
+              link_to "刪除", 
+              room, 
+              method: :delete,
+              data: { turbo_method: :delete, turbo_confirm: "確定刪除？" },
+              class: "bg-red-500 px-3 py-2 rounded text-white"
+            %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

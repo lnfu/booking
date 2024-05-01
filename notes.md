@@ -30,8 +30,7 @@ psql -d database_name -U user_name -h localhost -W
 
 # Controllers
 
-## TimeSlots
-
 ```sh
 ./bin/rails g controller TimeSlots
+./bin/rails g controller Rooms
 ```
