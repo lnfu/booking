@@ -24,4 +24,14 @@ rails new booking
 
 ```sh
 psql -d database_name -U user_name -h localhost -W
+./bin/rails db:migrate
+./bin/rails db:seed
+```
+
+# Controllers
+
+## TimeSlots
+
+```sh
+./bin/rails g controller TimeSlots
 ```

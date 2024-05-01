@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  resources :time_slots, only: [ :index, :create, :new, :delete, :destroy, :edit ]
 end

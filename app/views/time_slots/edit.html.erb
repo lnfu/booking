@@ -1,0 +1,9 @@
+<div>
+    <h1 class="text-4xl">編輯時段</h1>
+    <div class="py-5">
+        <%= render "form", time_slot: @time_slot %>
+    </div>
+    <div>
+    <%= link_to "回到時段列表", time_slots_path, class: "text-blue-500" %>
+    </div>
+</div>
