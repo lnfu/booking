@@ -69,3 +69,5 @@ end
 gem "tailwindcss-rails", "~> 2.5"
 
 gem 'dotenv', groups: [:development, :test]
+
+gem 'bcrypt'
