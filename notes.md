@@ -11,7 +11,7 @@ rails new booking
 ./bin/rails tailwindcss:install
 ```
 
-# Model: timeslot
+# Migrations
 
 ```sh
 ./bin/rails g model TimeSlot name:string:index start_at:time end_at:time
@@ -20,5 +20,8 @@ rails new booking
 ./bin/rails g model Reservation time_slot:references room:references user:references date:date 
 ```
 
+# PostreSQL docker
 
-
+```sh
+psql -d database_name -U user_name -h localhost -W
+```
