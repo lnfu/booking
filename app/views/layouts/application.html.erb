@@ -39,6 +39,13 @@
               <%= link_to("時段", time_slots_path, class: "block h-full px-4 py-6 hover:bg-blue-500 hover:text-white") %>
             <% end %>
           </li>
+          <li class="text-xl mx-1">
+            <% if request.env["REQUEST_URI"].start_with?("/reservations") %>
+              <%= link_to("預約", reservations_path, class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
+            <% else %>
+              <%= link_to("預約", reservations_path, class: "block h-full px-4 py-6 hover:bg-blue-500 hover:text-white") %>
+            <% end %>
+          </li>
         </ul>
         <div class="relative w-48" onmouseover="showDropdown()" onmouseout="hideDropdown()">
           <% if current_user.present? %>

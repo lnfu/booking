@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     # root "posts#index"
 
     resource :profile, controller: :profile, only: [ :show, :update ]
+    resources :reservations, only: [ :index, :create, :delete, :destroy ]
     resources :time_slots, only: [ :index, :create, :new, :destroy, :edit ]
     resources :rooms, only: [ :index, :create, :new, :destroy, :edit ]
     resources :users, only: [ :index, :create, :new, :destroy ] do
