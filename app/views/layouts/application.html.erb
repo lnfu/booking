@@ -48,8 +48,10 @@
               </a>
             </div>
             <ul class="absolute w-full hidden" id="dropdown">
-              <li class="px-4 py-2 hover:bg-red-500 text-center"><a href="#">個人資料</a></li>
-              <li class="px-4 py-2 hover:bg-red-500 text-center">
+              <li class="px-4 py-2 hover:bg-slate-100 text-center">
+                <%= link_to("個人資料", profile_path, class: "") %>
+              </li>
+              <li class="px-4 py-2 hover:bg-slate-100 text-center">
                 <%= link_to(
                   "登出", 
                   logout_path, 
