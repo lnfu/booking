@@ -76,7 +76,7 @@ class SessionController < ApplicationController
         if user.new_record?
             # 註冊新帳號
             user.email = email
-            user.nickname = name
+            user.nick = name
             user.role = :guest
             user.password_digest =BCrypt::Password.create(SecureRandom.hex(10))
             user.save

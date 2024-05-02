@@ -42,10 +42,19 @@ class UsersController < ApplicationController
     end
 
     def destroy
-        if @user.destroy
-            redirect_to users_url, notice: "User was successfully destroyed." # TODO i18n
+        if current_user == @user
+            if @user.destroy
+                reset_session # 如果把自己刪除, 就要登出
+                redirect_to login_path, notice: "Your account has been successfully deleted. You have been logged out." # TODO i18n
+            else
+                redirect_to users_url, alert: "Failed to destroy the user." # TODO i18n
+            end
         else
-            redirect_to users_url, alert: "Failed to destroy the user." # TODO i18n
+            if @user.destroy
+                redirect_to users_url, notice: "User was successfully destroyed." # TODO i18n
+            else
+                redirect_to users_url, alert: "Failed to destroy the user." # TODO i18n
+            end    
         end
     end
 
