@@ -34,4 +34,5 @@ psql -d database_name -U user_name -h localhost -W
 ./bin/rails g controller TimeSlots
 ./bin/rails g controller Rooms
 ./bin/rails g controller Users
+./bin/rails g controller Session
 ```

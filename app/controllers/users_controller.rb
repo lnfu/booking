@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-    before_action :set_user, only: %i[ destroy ]
+    before_action :set_user, only: %i[ destroy promote_to_regular promote_to_admin ]
     # before_action :require_login
     # before_action :require_admin
 
     def index
-        @users = User.all
+        @users = User.all.order(:role)
     end
 
     def new
@@ -46,6 +46,24 @@ class UsersController < ApplicationController
             redirect_to users_url, notice: "User was successfully destroyed." # TODO i18n
         else
             redirect_to users_url, alert: "Failed to destroy the user." # TODO i18n
+        end
+    end
+
+    def promote_to_regular
+        if @user.guest?
+            @user.update(role: :regular)
+            redirect_to users_url, notice: "User promoted to regular successfully."
+        else
+            redirect_to users_url, alert: "Only guests can be promoted to regular users."
+        end
+    end
+    
+    def promote_to_admin
+        if @user.regular?
+            @user.update(role: :admin)
+            redirect_to users_url, notice: "User promoted to admin successfully."
+        else
+            redirect_to users_url, alert: "Only regular users can be promoted to admin users."
         end
     end
 

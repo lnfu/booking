@@ -11,11 +11,13 @@ Rails.application.routes.draw do
     resources :time_slots, only: [ :index, :create, :new, :destroy, :edit ]
     resources :rooms, only: [ :index, :create, :new, :destroy, :edit ]
     resources :users, only: [ :index, :create, :new, :destroy ] do
-        # member do
-        # patch "upgrade_guest_to_regular"
-        # patch "downgrade_regular_to_guest"
-        # patch "upgrade_regular_to_admin"
-        # patch "downgrade_admin_to_regular"
-        # end
+        member do
+            patch "promote_to_regular"
+            patch "promote_to_admin"
+        end
     end
+    get "/login", to: "session#new"
+    post "/login", to: "session#create"
+    get "/login/callback", to: "session#callback"
+    delete "/logout", to: "session#destroy"  
 end

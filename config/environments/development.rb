@@ -73,4 +73,10 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # NYCU OAuth2 登入
+  config.oauth_server = "https://id.nycu.edu.tw"
+  config.oauth_scope = "profile"
+  config.assume_ssl = false
+  config.force_ssl = false
 end
