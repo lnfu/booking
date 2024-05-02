@@ -1,0 +1,31 @@
+<div>
+  <h1 class="text-4xl">註冊</h1>
+  <div class="py-5">
+    <%= form_with(model: @user) do |form| %>
+      <div class="mb-4">
+        <%= form.label :nick, "使用者名稱", class: "block font-bold text-gray-700 mb-1" %>
+        <%= form.text_field :nick, required: true, class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :name, "學號", class: "block font-bold text-gray-700 mb-1" %>
+        <%= form.text_field :name, required: true, pattern: "^[a-z0-9]{1,9}$", class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :email, "電子郵件", class: "block font-bold text-gray-700 mb-1" %>
+        <%= form.email_field :email, required: true, class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :password, "密碼", class: "block font-bold text-gray-700 mb-1" %>
+        <%= form.password_field :password, required: true, class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div>
+        <%= form.submit "建立帳號", class: "bg-blue-500 px-3 py-2 rounded text-white mb-2" %>
+      </div>
+      <% flash.each do |type, msg| %>
+        <div class="<%= flash_class(type) %>">
+          <%= msg %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<table class="w-full text-left border-collapse bg-slate-50">
+  <thead>
+    <tr>
+      <th class="px-16 pt-12 pb-4 text-xl">學號</th>
+      <th class="px-16 pt-12 pb-4 text-xl">名稱</th>
+      <th class="px-16 pt-12 pb-4 text-xl">郵件</th>
+      <th class="px-16 pt-12 pb-4 text-xl">權限</th>
+      <th class="px-16 pt-12 pb-4 text-xl"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr class="border-t border-slate-200">
+        <td class="px-16 py-2"><%= user.name %></td>
+        <td class="px-16 py-2"><%= user.nick %></td>
+        <td class="px-16 py-2"><%= user.email %></td>
+        <td class="px-16 py-2"><%= user.role %></td>
+        <td class="px-16 py-2">
+          <div>
+            <%= 
+              link_to "刪除", 
+              user, 
+              method: :delete,
+              data: { turbo_method: :delete, turbo_confirm: "確定刪除？" },
+              class: "bg-red-500 px-3 py-2 rounded text-white"
+            %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

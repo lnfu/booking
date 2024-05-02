@@ -1,22 +1,22 @@
 <table class="w-full text-left border-collapse bg-slate-50">
   <thead>
     <tr>
-      <th class="px-8 py-4 text-xl">名稱</th>
-      <th class="px-8 py-4 text-xl">開始時間</th>
-      <th class="px-8 py-4 text-xl">結束時間</th>
-      <th class="px-8 py-4 text-xl"></th>
+      <th class="px-16 pt-12 pb-2 text-xl">名稱</th>
+      <th class="px-16 pt-12 pb-2 text-xl">開始時間</th>
+      <th class="px-16 pt-12 pb-2 text-xl">結束時間</th>
+      <th class="px-16 pt-12 pb-2 text-xl"></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="px-8" colspan="4"><%= link_to "新增時段", new_time_slot_path, class: "text-blue-500"%></td>
+      <td class="px-16" colspan="4"><%= link_to "新增時段", new_time_slot_path, class: "text-blue-500"%></td>
     </tr>
     <% @time_slots.each do |time_slot| %>
       <tr class="border-t border-slate-200">
-        <td class="px-8 py-2"><%= time_slot.name %></td>
-        <td class="px-8 py-2"><%= time_slot.start_at.strftime("%H:%M") %></td>
-        <td class="px-8 py-2"><%= time_slot.end_at.strftime("%H:%M") %></td>
-        <td class="px-8 py-2">
+        <td class="px-16 py-2"><%= time_slot.name %></td>
+        <td class="px-16 py-2"><%= time_slot.start_at.strftime("%H:%M") %></td>
+        <td class="px-16 py-2"><%= time_slot.end_at.strftime("%H:%M") %></td>
+        <td class="px-16 py-2">
           <div>
             <%= 
               link_to "編輯", 
