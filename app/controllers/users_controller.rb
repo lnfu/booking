@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
     before_action :set_user, only: %i[ destroy promote_to_regular promote_to_admin ]
-    # before_action :require_login
+    before_action :require_login, except: %i[ new create ]
+    before_action :require_non_guest, except: %i[ pending ]
     # before_action :require_admin
 
     def index
@@ -35,7 +36,8 @@ class UsersController < ApplicationController
         @user.role = :guest
 
         if @user.save
-            redirect_to user_url(@user), notice: "User was successfully created." # TODO i18n
+            # 回到登入頁面
+            redirect_to login_path, notice: "User was successfully created." # TODO i18n
         else
             render :new, status: :unprocessable_entity
         end
@@ -45,6 +47,7 @@ class UsersController < ApplicationController
         if current_user == @user
             if @user.destroy
                 reset_session # 如果把自己刪除, 就要登出
+                # 回到登入頁面
                 redirect_to login_path, notice: "Your account has been successfully deleted. You have been logged out." # TODO i18n
             else
                 redirect_to users_url, alert: "Failed to destroy the user." # TODO i18n
@@ -76,10 +79,13 @@ class UsersController < ApplicationController
         end
     end
 
+    def pending
+    end
+
     private
 
     def user_params
-        params.require(:user).permit(:name, :email, :nick, :password)
+        params.require(:user).permit(:name, :email, :nick, :password, :password_confirmation)
     end
 
     def set_user

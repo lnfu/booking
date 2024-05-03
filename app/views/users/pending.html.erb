@@ -1,0 +1,26 @@
+<div class="container mx-auto py-10">
+  <div class="py-12 px-16 text-center">
+    <h1 class="text-4xl">帳號尚未審核</h1>
+    <div class="py-5">
+      <p>請通知管理員確認您的社員身份。</p>
+      <p><span id="countdown">&#8734;</span> 秒後將自動導向主畫面...</p>
+    </div>
+  </div>
+  <script>
+    function countdown(seconds) {
+      var counter = seconds;
+      var interval = setInterval(function() {
+        document.getElementById('countdown').innerHTML = counter;
+        counter--;
+        if (counter < 0) {
+          clearInterval(interval);
+          window.location.href = '<%= root_path %>';
+        }
+      }, 1000);
+    }
+
+    window.onload = function() {
+      countdown(5);
+    };
+  </script>
+</div>

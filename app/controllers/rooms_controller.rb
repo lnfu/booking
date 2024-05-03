@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
     before_action :set_room, only: %i[ destroy edit update ]
-    # TODO before_action :require_login
-    # TODO before_action :require_non_guest
+    before_action :require_login
+    before_action :require_non_guest
 
     def index
         @rooms = Room.all

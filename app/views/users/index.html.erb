@@ -1,58 +1,60 @@
-<div class="w-full bg-slate-100 rounded-3xl py-12 px-16">
-  <table class="w-full text-left border-collapse">
-    <thead>
-      <tr>
-        <th class="pb-4 text-xl">學號</th>
-        <th class="pb-4 text-xl">名稱</th>
-        <th class="pb-4 text-xl">郵件</th>
-        <th class="pb-4 text-xl"></th>
-        <th class="pb-4 text-xl"></th>
-        <th class="pb-4 text-xl"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr class="border-t border-slate-200">
-          <td class="py-2"><%= user.name %></td>
-          <td class="py-2"><%= user.nick %></td>
-          <td class="py-2"><%= user.email %></td>
-          <td class="py-2 text-center">
-            <% if user.guest? %>
-              <%= link_to "啟用帳號",
+<div class="container mx-auto py-10">
+  <div class="w-full bg-white rounded-3xl py-12 px-16">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr>
+          <th class="pb-4 text-xl">學號</th>
+          <th class="pb-4 text-xl">名稱</th>
+          <th class="pb-4 text-xl">郵件</th>
+          <th class="pb-4 text-xl"></th>
+          <th class="pb-4 text-xl"></th>
+          <th class="pb-4 text-xl"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr class="border-t border-slate-200">
+            <td class="py-2"><%= user.name %></td>
+            <td class="py-2"><%= user.nick %></td>
+            <td class="py-2"><%= user.email %></td>
+            <td class="py-2 text-center">
+              <% if user.guest? %>
+                <%= link_to "啟用帳號",
               promote_to_regular_user_path(user.id),
               method: :patch,
               data: { turbo_method: :patch, turbo_confirm: "確定？" },
               class: "bg-green-300 text-green-800 px-3 py-2 rounded"
           %>
-            <% end %>
-          </td>
-          <td class="py-2 text-center">
-            <% if user.regular? %>
-              <%= link_to "設為管理員",
+              <% end %>
+            </td>
+            <td class="py-2 text-center">
+              <% if user.regular? %>
+                <%= link_to "設為管理員",
               promote_to_admin_user_path(user.id),
               method: :patch,
               data: { turbo_method: :patch, turbo_confirm: "確定？" },
               class: "bg-indigo-600 text-white px-3 py-2 rounded"
           %>
-            <% elsif user.guest? %>
-              尚未啟用
-            <% elsif user.admin? %>
-              管理員   
-            <% end %>
-          </td>
-          <td class="py-2 text-right">
-            <div>
-              <%= 
+              <% elsif user.guest? %>
+                尚未啟用
+              <% elsif user.admin? %>
+                管理員   
+              <% end %>
+            </td>
+            <td class="py-2 text-right">
+              <div>
+                <%= 
               link_to "刪除", 
               user, 
               method: :delete,
               data: { turbo_method: :delete, turbo_confirm: "確定刪除？" },
               class: "bg-red-500 text-white px-3 py-2 rounded"
             %>
-            </div>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

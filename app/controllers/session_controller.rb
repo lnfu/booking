@@ -12,7 +12,7 @@ class SessionController < ApplicationController
                 if !!user && user.authenticate(params[:password])
                     create_session(user.id)
                 else
-                    redirect_to login_path, alert: "Incorrect student ID or password"
+                    redirect_to login_path, alert: "Incorrect student ID or password."
                 end
             when "oauth"
                 redirect_to(authorization_url, allow_other_host: true)
@@ -21,6 +21,7 @@ class SessionController < ApplicationController
 
     def destroy
         reset_session
+        # 回到登入頁面
         redirect_to login_path, notice: "Logout successfully."
     end    
 
@@ -87,7 +88,7 @@ class SessionController < ApplicationController
     
     def create_session(id)
         session[:user_id] = id
-        redirect_to login_path, notice: "Login successfully."
+        redirect_to (session.delete(:return_to) || root_path), notice: "Login successfully."
     end
     
 end

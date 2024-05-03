@@ -18,7 +18,9 @@ Rails.application.routes.draw do
             patch "promote_to_regular"
             patch "promote_to_admin"
         end
+        resources :reservations
     end
+    get "pending", to: "users#pending"
     get "/login", to: "session#new"
     post "/login", to: "session#create"
     get "/login/callback", to: "session#callback"

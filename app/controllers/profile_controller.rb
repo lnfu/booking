@@ -1,9 +1,8 @@
 class ProfileController < ApplicationController
     before_action :set_user, only: [ :show, :update ]
-    # TODO before_action :require_login
+    before_action :require_login
 
     def show
-        # TODO redirect_to login_path if !current_user
     end
 
     def update
