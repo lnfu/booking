@@ -10,44 +10,55 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <nav>
-      <div class="md:flex md:justify-between mt-2 mx-2">
-        <div class="place-items-center flex hover:bg-red-500">
-          <a href="#">
+    <nav class="bg-slate-100">
+      <div class="md:flex md:justify-between">
+        <div class="place-items-center flex">
+          <%# root_path %>
+          <%= link_to(root_path, class: "") do %>
             <img class="h-12 mx-5" src="https://fakeimg.pl/300">
-          </a>
+          <% end %>
         </div>
         <ul class="md:flex">
-          <li class="text-xl mx-1">
+          <% room_names = Room.pluck(:name) %>
+          <% room_names.each do |room_name| %>
+            <li class="text-xl">
+              <% if request.env["REQUEST_URI"].start_with?(board_path(room_name)) %>
+                <%= link_to(room_name, board_path(room_name), class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
+              <% else %>
+                <%= link_to(room_name, board_path(room_name), class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
+              <% end %>
+            </li>
+          <% end %>
+          <li class="text-xl">
             <% if request.env["REQUEST_URI"].start_with?("/users") %>
               <%= link_to("使用者", users_path, class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
             <% else %>
-              <%= link_to("使用者", users_path, class: "block h-full px-4 py-6 hover:bg-blue-500 hover:text-white") %>
+              <%= link_to("使用者", users_path, class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
             <% end %>
           </li>
-          <li class="text-xl mx-1">
+          <li class="text-xl">
             <% if request.env["REQUEST_URI"].start_with?("/rooms") %>
               <%= link_to("琴房", rooms_path, class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
             <% else %>
-              <%= link_to("琴房", rooms_path, class: "block h-full px-4 py-6 hover:bg-blue-500 hover:text-white") %>
+              <%= link_to("琴房", rooms_path, class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
             <% end %>
           </li>
-          <li class="text-xl mx-1">
+          <li class="text-xl">
             <% if request.env["REQUEST_URI"].start_with?("/time_slots") %>
               <%= link_to("時段", time_slots_path, class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
             <% else %>
-              <%= link_to("時段", time_slots_path, class: "block h-full px-4 py-6 hover:bg-blue-500 hover:text-white") %>
+              <%= link_to("時段", time_slots_path, class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
             <% end %>
           </li>
-          <li class="text-xl mx-1">
+          <li class="text-xl">
             <% if request.env["REQUEST_URI"].start_with?("/reservations") %>
               <%= link_to("預約", reservations_path, class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
             <% else %>
-              <%= link_to("預約", reservations_path, class: "block h-full px-4 py-6 hover:bg-blue-500 hover:text-white") %>
+              <%= link_to("預約", reservations_path, class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
             <% end %>
           </li>
         </ul>
-        <div class="relative w-48" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+        <div class="relative w-48 cursor-pointer" onmouseover="showDropdown()" onmouseout="hideDropdown()">
           <% if current_user.present? %>
             <div class="text-xl px-8 py-6 text-center">
               <a class="">
@@ -55,10 +66,10 @@
               </a>
             </div>
             <ul class="absolute w-full hidden" id="dropdown">
-              <li class="px-4 py-2 hover:bg-slate-100 text-center">
+              <li class="px-4 py-2 hover:bg-blue-300 rounded text-center">
                 <%= link_to("個人資料", profile_path, class: "") %>
               </li>
-              <li class="px-4 py-2 hover:bg-slate-100 text-center">
+              <li class="px-4 py-2 hover:bg-blue-300 rounded text-center">
                 <%= link_to(
                   "登出", 
                   logout_path, 
@@ -75,7 +86,7 @@
         </div>
       </div>
     </nav>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="container mx-auto mt-16 px-5 flex">
       <%= yield %>
     </main>
     <footer class="py-10 text-center">

@@ -1,0 +1,67 @@
+<div class="w-full bg-slate-100 rounded-3xl py-12">
+  <table class="w-full text-left border-collapse text-center">
+    <thead>
+      <tr>
+        <th class="pb-2">
+          <div class="">
+            <%= link_to(raw("&#9665;"), board_path(@room.name, date_to_str(@target_date - 7)), class: "text-decoration-none text-dark display-6") %>
+            &nbsp;
+            &nbsp;
+            <%= link_to(raw("&#9655;"), board_path(@room.name, date_to_str(@target_date + 7)), class: "text-decoration-none text-dark display-6") %>
+          </div>
+        </th>
+        <% @week_dates.each do |week_date| %>
+          <th class="pb-2 w-48">
+            <div class="text-xl font-bold"><%= week_date.strftime("%A") %></div>
+            <div class="font-light"><%= week_date.strftime('%Y-%m-%d') %></div>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @time_slots.each do |time_slot| %>
+        <tr>
+          <td class="h-10"><%= "#{time_slot.start_at.strftime("%H:%M")} - #{time_slot.end_at.strftime("%H:%M")}" %></td>
+          <% @data.each do |day| %>
+            <td class="h-10">
+              <% reservation = day[time_slot] %>
+              <% if reservation.present? %>
+                <% if current_user.present? && reservation.user == current_user %>
+                  <%= link_to("取消", reservations_path, class: "block leading-10 h-full hover:text-white bg-red-100 hover:bg-blue-500") %>
+                <% else %>
+                  <%= reservation.user.name %>
+                <% end %>
+              <% else %>
+                <%= link_to(
+              "預約",
+              reservations_path(
+              room_id: @room.id,
+              time_slot_id: time_slot.id,
+              date: day["date"].to_s
+              ),
+              method: :post,
+              data: {
+              turbo_method: :post
+              },
+              class: "block leading-10 h-full hover:text-white bg-blue-100 hover:bg-blue-500"
+              )%>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%# <style>
+  .btn-prev, .btn-next {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    background-color: rgba(var(--bs-light-rgb), var(--bs-link-opacity, 1));
+    color: var(--bs-dark-rgb);
+    border-radius: 15px;
+  }
+</style> %>
+</div>

@@ -1,7 +1,7 @@
 class ReservationsController < ApplicationController
     # before_action :set_reservation, only: %i[ destroy ]
-    # before_action :set_room, only: %i[ create ]
-    # before_action :set_date, only: %i[ create ]
+    before_action :set_room, only: %i[ create ]
+    before_action :set_date, only: %i[ create ]
     # TODO before_action :require_login
     # TODO before_action :require_non_guest
     # TODO before_action :require_admin, except: %i[ show create destroy ]
@@ -16,24 +16,25 @@ class ReservationsController < ApplicationController
     #     render :show
     # end
 
-    # def create
-    #     if current_user.blank?
-    #         redirect_to board_path(@room.name, @date.year, @date.month, @date.day), notice: "Reservation was successfully created."
-    #     end
+    def create
+        if current_user.blank?
+            redirect_to board_path(@room.name, date_to_str(@date)), notice: "You are not logged in."
+            return
+        end
 
-    #     @reservation = Reservation.new(
-    #         user_id: current_user.id,
-    #         room_id: @room.id,
-    #         time_slot_id: params[:time_slot_id],
-    #         date: @date
-    #     )
+        @reservation = Reservation.new(
+            user_id: current_user.id,
+            room_id: @room.id,
+            time_slot_id: params[:time_slot_id],
+            date: @date
+        )
 
-    #     if @reservation.save
-    #         redirect_to board_path(@room.name, @date.year, @date.month, @date.day), notice: "Reservation was successfully created."
-    #     else
-    #         redirect_to board_path(@room.name, @date.year, @date.month, @date.day), notice: "Failed to create reservation."
-    #     end
-    # end
+        if @reservation.save
+            redirect_to board_path(@room.name, "#{@date.year}-#{@date.month}-#{@date.day}"), notice: "Reservation was successfully created."
+        else
+            redirect_to board_path(@room.name, "#{@date.year}-#{@date.month}-#{@date.day}"), notice: "Failed to create reservation."
+        end
+    end
 
     # def destroy
     #     @reservation.destroy!
@@ -51,11 +52,11 @@ class ReservationsController < ApplicationController
     #     @reservation = Reservation.find(params[:id])
     # end
 
-    # def set_room
-    #     @room = Room.find(params[:room_id])
-    # end
+    def set_room
+        @room = Room.find(params[:room_id])
+    end
 
-    # def set_date
-    #     @date = params[:date].to_date
-    # end
+    def set_date
+        @date = params[:date].to_date
+    end
 end

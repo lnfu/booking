@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-    before_action :set_room, only: %i[ destroy edit ]
+    before_action :set_room, only: %i[ destroy edit update ]
     # TODO before_action :require_login
     # TODO before_action :require_non_guest
 
@@ -17,7 +17,7 @@ class RoomsController < ApplicationController
         # TODO 檢查時段重疊
 
         if @room.save
-            redirect_to room_url(@room), notice: "Room was successfully created." # TODO i18n
+            redirect_to rooms_url, notice: "Room was successfully created." # TODO i18n
         else
             render :new, status: :unprocessable_entity
         end
@@ -32,6 +32,14 @@ class RoomsController < ApplicationController
     end
 
     def edit
+    end
+
+    def update
+        if @room.update(room_params)
+            redirect_to rooms_url, notice: "Room was successfully updated." # TODO i18n
+        else
+            redirect_to rooms_url, alert: "Failed to update the room." # TODO i18n
+        end
     end
 
     private
