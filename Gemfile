@@ -71,3 +71,4 @@ gem "tailwindcss-rails", "~> 2.5"
 gem 'dotenv', groups: [:development, :test]
 
 gem 'bcrypt'
+gem "rails-settings-cached", "~> 2.9"

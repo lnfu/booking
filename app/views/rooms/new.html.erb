@@ -1,10 +1,11 @@
-<%# TODO %>
-<div>
-    <h1 class="text-4xl">新增房間</h1>
+<div class="container mx-auto py-10">
+  <div class="w-1/2 mx-auto bg-white rounded-3xl py-12 px-16">
+    <h1 class="text-4xl text-center">新增房間</h1>
     <div class="py-5">
-        <%= render "form", room: @room %>
+      <%= render "form", room: @room %>
     </div>
-    <div>
-    <%= link_to "回到房間列表", rooms_path, class: "text-blue-500" %>
+    <div class="text-center">
+      <%= link_to "回到房間列表", rooms_path, class: "text-blue-500" %>
     </div>
+  </div>
 </div>

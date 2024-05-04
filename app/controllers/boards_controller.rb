@@ -3,8 +3,14 @@ class BoardsController < ApplicationController
     before_action :set_target_date, only: %i[ show ]
 
     def index
-        # 預設顯示 409
-        redirect_to board_path(id: "409")
+        first_room = Room.first
+
+        if first_room.present?
+            redirect_to board_path(id: first_room.name)
+        else
+            # TODO 沒有琴房時
+            redirect_to rails_health_check_path
+        end
     end
 
     def show
@@ -17,6 +23,7 @@ class BoardsController < ApplicationController
             @data[week_date.cwday - 1] = { "date" => week_date } # 紀錄該日的日期
         end
 
+        # TODO 驗證 @room 在資料庫
         reservations = Reservation.where(
             room_id: @room.id,
             date: @week_dates

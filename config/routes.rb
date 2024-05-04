@@ -29,4 +29,9 @@ Rails.application.routes.draw do
     get "/boards/:id/(:date)", to: "boards#show",
         constraints: { :date => /\d{4}-\d{2}-\d{2}/ },
         as: :board
+
+    get :rules, to: "rules#index" 
+    get :limits, to: "limits#index" 
+    put :limits, to: "limits#update" 
+    
 end

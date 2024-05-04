@@ -29,7 +29,13 @@
               <% end %>
             </li>
           <% end %>
-          <%# user_reservations_path(user_id: @user.id) %>
+          <li class="text-xl">
+            <% if request.path == rules_path %>
+              <%= link_to("使用規範", rules_path, class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
+            <% else %>
+              <%= link_to("使用規範", rules_path, class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
+            <% end %>
+          </li>
           <li class="text-xl">
             <% if request.path.start_with?("/users/") && request.path.include?("/reservations") %>
               <%# e.g., http://127.0.0.1:3000/users/13/reservations %>
@@ -65,6 +71,13 @@
                 <%= link_to("預約", reservations_path, class: "block h-full px-4 py-6 bg-rose-500 text-white") %>
               <% else %>
                 <%= link_to("預約", reservations_path, class: "block h-full px-4 py-6 hover:bg-rose-300 hover:text-white") %>
+              <% end %>
+            </li>
+            <li class="text-xl">
+              <% if request.path == limits_path %>
+                <%= link_to("限制", limits_path, class: "block h-full px-4 py-6 bg-rose-500 text-white") %>
+              <% else %>
+                <%= link_to("限制", limits_path, class: "block h-full px-4 py-6 hover:bg-rose-300 hover:text-white") %>
               <% end %>
             </li>
           <% end %>

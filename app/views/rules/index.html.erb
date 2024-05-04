@@ -1,0 +1,10 @@
+<div class="container mx-auto py-10">
+    <div class="w-1/2 mx-auto bg-white rounded-3xl py-12 px-20">
+      <ol class="text-xl list-decimal">
+        <li class="py-2">每天最多 <%= @daily_limit == -1 ? "∞" : @daily_limit %> 個時段</li>
+        <li class="py-2">每週最多 <%= @weekly_limit == -1 ? "∞" : @weekly_limit %> 個時段</li>
+        <li class="py-2">每月最多 <%= @monthly_limit == -1 ? "∞" : @monthly_limit %> 個時段</li>
+        <li class="py-2">...</li>
+      </ol>
+    </div>
+  </div>
