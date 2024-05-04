@@ -22,7 +22,7 @@ class ReservationsController < ApplicationController
     end
 
     def create
-
+        # TODO 檢查同時段是否有在別房的預約 (如果有 1. 取消別房 2. 禁止)
         @reservation = Reservation.new(
             user_id: current_user.id,
             room_id: @room.id,

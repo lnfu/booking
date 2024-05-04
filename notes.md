@@ -38,4 +38,5 @@ psql -d database_name -U user_name -h localhost -W
 ./bin/rails g controller Profile
 ./bin/rails g controller Reservations
 ./bin/rails g controller Boards
+./bin/rails g controller Limits
 ```

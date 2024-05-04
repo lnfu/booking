@@ -1,7 +1,6 @@
 class BoardsController < ApplicationController
     before_action :set_room, only: %i[ show ]
     before_action :set_target_date, only: %i[ show ]
-    # TODO before_action :require_login
 
     def index
         # 預設顯示 409

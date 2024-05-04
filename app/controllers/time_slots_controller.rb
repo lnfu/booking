@@ -34,6 +34,14 @@ class TimeSlotsController < ApplicationController
     def edit
     end
 
+    def update
+        if @time_slot.update(time_slot_params)
+            redirect_to time_slots_url, notice: "Time slot was successfully updated." # TODO i18n
+        else
+            redirect_to time_slots_url, alert: "Failed to update the time slot." # TODO i18n
+        end
+    end
+
     private
 
     def time_slot_params
