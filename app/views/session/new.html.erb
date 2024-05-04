@@ -1,10 +1,8 @@
 <div class="bg-slate-100 flex justify-center items-center">
-  <div class="w-1/2 h-[calc(100vh-75px)]  hidden lg:block bg-amber-200">
-    <div class="flex items-center justify-center h-full">
-      <%= image_tag 'login.png', class: "rounded-xl" ,alt: "Login Meme" %>
-    </div>
+  <div class="w-7/12 h-[calc(100vh-75px)] hidden lg:block">
+    <%= image_tag 'login.jpg', class: "object-cover w-full h-full" ,alt: "Login Meme" %>
   </div>
-  <div class="w-full lg:w-1/2 px-32">
+  <div class="w-full lg:w-5/12 px-32">
     <h1 class="text-4xl mb-4">登入</h1>
     <div class="">
       <%= form_tag "/login" do %>
