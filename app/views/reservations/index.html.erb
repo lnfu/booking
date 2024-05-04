@@ -14,12 +14,26 @@
         <% if @reservations.present? %>
           <% @reservations.each do |reservation| %>
             <tr class="border-t border-slate-200">
-              <td class="py-2"><%= reservation.user.name %></td>
-              <td class="py-2" style=<%= "color:" + reservation.room.color + ";" %>>
-                <%= reservation.room.name %>
+              <td class="py-2">
+                <div class="px-2 py-1">
+                  <%= reservation.user.name %>
+                </div>
               </td>
-              <td class="py-2"><%= reservation.date %></td>
-              <td class="py-2"><%= "#{reservation.time_slot.start_at.strftime("%I:%M %p")} - #{reservation.time_slot.end_at.strftime("%I:%M %p")}" %></td>
+              <td class="py-2 text-white">
+                <div class="w-min rounded px-2 py-1" style=<%= "background-color:" + reservation.room.color + ";" %>>
+                  <%= reservation.room.name %>
+                </div>
+              </td>
+              <td class="py-2">
+                <div class="px-2 py-1">
+                  <%= reservation.date %>
+                </div>
+              </td>
+              <td class="py-2">
+                <div class="px-2 py-1">
+                  <%= "#{reservation.time_slot.start_at.strftime("%I:%M %p")} - #{reservation.time_slot.end_at.strftime("%I:%M %p")}" %>
+                </div>
+              </td>
               <td class="py-2 text-right">
                 <div>
                   <%= 

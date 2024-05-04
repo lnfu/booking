@@ -2,6 +2,7 @@ class RoomsController < ApplicationController
     before_action :set_room, only: %i[ destroy edit update ]
     before_action :require_login
     before_action :require_non_guest
+    before_action :require_admin, except: %i[ index ] # 一般社員只能看房間列表
 
     def index
         @rooms = Room.all

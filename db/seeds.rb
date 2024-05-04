@@ -20,7 +20,7 @@ Room.destroy_all
 Room.create!(
     name: '444',
     password: '123456',
-    color: '#FFFFFF',
+    color: '#000000',
 )
 
 # User

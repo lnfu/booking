@@ -3,7 +3,7 @@ class CreateRooms < ActiveRecord::Migration[7.1]
     create_table :rooms do |t|
       t.string :name, null: false # 琴房名稱 e.g., 409
       t.string :password, null: false # 琴房門鎖密碼
-      t.string :color, default: '#FFFFFF'
+      t.string :color, default: '#000000'
 
       t.timestamps
     end

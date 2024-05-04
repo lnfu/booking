@@ -16,9 +16,21 @@
         </tr>
         <% @time_slots.each do |time_slot| %>
           <tr class="border-t border-slate-200">
-            <td class="py-2"><%= time_slot.name %></td>
-            <td class="py-2"><%= time_slot.start_at.strftime("%H:%M") %></td>
-            <td class="py-2"><%= time_slot.end_at.strftime("%H:%M") %></td>
+            <td class="py-2">
+              <div class="px-2 py-1">
+                <%= time_slot.name %>
+              </div>
+            </td>
+            <td class="py-2">
+              <div class="px-2 py-1">
+                <%= time_slot.start_at.strftime("%H:%M") %>
+              </div>
+            </td>
+            <td class="py-2">
+              <div class="px-2 py-1">
+                <%= time_slot.end_at.strftime("%H:%M") %>
+              </div>
+            </td>
             <td class="py-2 text-right">
               <div>
                 <%= 

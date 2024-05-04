@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_04_043607) do
   create_table "rooms", force: :cascade do |t|
     t.string "name", null: false
     t.string "password", null: false
-    t.string "color", default: "#FFFFFF"
+    t.string "color", default: "#000000"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_rooms_on_name", unique: true

@@ -14,9 +14,21 @@
       <tbody>
         <% @users.each do |user| %>
           <tr class="border-t border-slate-200">
-            <td class="py-2"><%= user.name %></td>
-            <td class="py-2"><%= user.nick %></td>
-            <td class="py-2"><%= user.email %></td>
+            <td class="py-2">
+              <div class="px-2 py-1">
+                <%= user.name %>
+              </div>
+            </td>
+            <td class="py-2">
+              <div class="px-2 py-1">
+                <%= user.nick %>
+              </div>
+            </td>
+            <td class="py-2">
+              <div class="px-2 py-1">
+                <%= user.email %>
+              </div>
+            </td>
             <td class="py-2 text-center">
               <% if user.guest? %>
                 <%= link_to "啟用帳號",
