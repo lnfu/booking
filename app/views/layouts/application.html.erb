@@ -12,89 +12,126 @@
   <body>
     <div class="min-h-screen bg-red-500">
       <nav class="bg-slate-300">
-        <div class="md:flex md:justify-between">
-          <div class="place-items-center flex">
-            <%# root_path %>
-            <%= link_to(root_path, class: "") do %>
+        <div class="lg:flex lg:h-20 lg:justify-between">
+          <div class="h-full flex justify-between items-center">
+            <%# 回主畫面 %>
+            <%= link_to(root_path, class: "py-2") do %>
               <img class="h-12 mx-5" src="https://fakeimg.pl/300">
             <% end %>
+            <%# 漢堡 %>
+            <button id="burger" class="py-2 lg:hidden" onclick="toggleMenu()">
+              <%= image_tag 'burger.svg', class: "h-12 mx-5" ,alt: "Burger Menu" %>
+            </button>
           </div>
-          <ul class="md:flex">
+          <%# 中間的 nav item %>
+          <ul id="menu" class="lg:flex hidden">
             <% room_names = Room.pluck(:name) %>
             <% room_names.each do |room_name| %>
               <li class="text-xl">
                 <% if request.path == board_path(room_name) %>
-                  <%= link_to(room_name, board_path(room_name), class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
+                  <%= link_to(board_path(room_name), class: "block flex h-full items-center px-4 bg-blue-500 text-white") do %>
+                    <%= room_name %>
+                  <% end %>
                 <% else %>
-                  <%= link_to(room_name, board_path(room_name), class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
+                  <%= link_to(board_path(room_name), class: "block flex h-full items-center px-4 hover:bg-blue-300 hover:text-white") do %>
+                    <%= room_name %>
+                  <% end %>
                 <% end %>
               </li>
             <% end %>
             <li class="text-xl">
               <% if request.path == rules_path %>
-                <%= link_to("使用規範", rules_path, class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
+                <%= link_to(rules_path, class: "block flex h-full items-center px-4 bg-blue-500 text-white") do %>
+                  <div class="mx-auto py-2">使用規範</div>
+                <% end %>
               <% else %>
-                <%= link_to("使用規範", rules_path, class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
+                <%= link_to(rules_path, class: "block flex h-full items-center px-4 hover:bg-blue-300 hover:text-white") do %>
+                  <div class="mx-auto py-2">使用規範</div>
+                <% end %>
               <% end %>
             </li>
             <li class="text-xl">
               <% if request.path.start_with?("/users/") && request.path.include?("/reservations") %>
-                <%# e.g., http://127.0.0.1:3000/users/13/reservations %>
-                <%= link_to("我的預約", current_user ? user_reservations_path(user_id: current_user.id) : reservations_path, class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
+                <%= link_to(current_user ? user_reservations_path(user_id: current_user.id) : reservations_path, class: "block flex h-full items-center px-4 bg-blue-500 text-white") do %>
+                  <div class="mx-auto py-2">我的預約</div>
+                <% end %>
               <% else %>
-                <%= link_to("我的預約", current_user ? user_reservations_path(user_id: current_user.id) : reservations_path, class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
+                <%= link_to(current_user ? user_reservations_path(user_id: current_user.id) : reservations_path, class: "block flex h-full items-center px-4 hover:bg-blue-300 hover:text-white") do %>
+                  <div class="mx-auto py-2">我的預約</div>
+                <% end %>
               <% end %>
             </li>
             <li class="text-xl">
               <% if request.path == rooms_path %>
-                <%= link_to("琴房", rooms_path, class: "block h-full px-4 py-6 bg-blue-500 text-white") %>
+                <%= link_to(rooms_path, class: "block flex h-full items-center px-4 bg-blue-500 text-white") do %>
+                  <div class="mx-auto py-2">琴房</div>
+                <% end %>
               <% else %>
-                <%= link_to("琴房", rooms_path, class: "block h-full px-4 py-6 hover:bg-blue-300 hover:text-white") %>
+                <%= link_to(rooms_path, class: "block flex h-full items-center px-4 hover:bg-blue-300 hover:text-white") do %>
+                  <div class="mx-auto py-2">琴房</div>
+                <% end %>
               <% end %>
             </li>
             <% if current_user && current_user.admin? %>
               <li class="text-xl">
                 <% if request.path == users_path %>
-                  <%= link_to("使用者", users_path, class: "block h-full px-4 py-6 bg-rose-500 text-white") %>
+                  <%= link_to(users_path, class: "block flex h-full items-center px-4 bg-rose-500 text-white") do %>
+                    <div class="mx-auto py-2">使用者</div>
+                  <% end %>
                 <% else %>
-                  <%= link_to("使用者", users_path, class: "block h-full px-4 py-6 hover:bg-rose-300 hover:text-white") %>
+                  <%= link_to(users_path, class: "block flex h-full items-center px-4 hover:bg-rose-300 hover:text-white") do %>
+                    <div class="mx-auto py-2">使用者</div>
+                  <% end %>
                 <% end %>
               </li>
               <li class="text-xl">
                 <% if request.path == time_slots_path %>
-                  <%= link_to("時段", time_slots_path, class: "block h-full px-4 py-6 bg-rose-500 text-white") %>
+                  <%= link_to(time_slots_path, class: "block flex h-full items-center px-4 bg-rose-500 text-white") do %>
+                    <div class="mx-auto py-2">時段</div>
+                  <% end %>
                 <% else %>
-                  <%= link_to("時段", time_slots_path, class: "block h-full px-4 py-6 hover:bg-rose-300 hover:text-white") %>
+                  <%= link_to(time_slots_path, class: "block flex h-full items-center px-4 hover:bg-rose-300 hover:text-white") do %>
+                    <div class="mx-auto py-2">時段</div>
+                  <% end %>
                 <% end %>
               </li>
               <li class="text-xl">
                 <% if request.path == reservations_path %>
-                  <%= link_to("預約", reservations_path, class: "block h-full px-4 py-6 bg-rose-500 text-white") %>
+                  <%= link_to(reservations_path, class: "block flex h-full items-center px-4 bg-rose-500 text-white") do %>
+                    <div class="mx-auto py-2">預約</div>
+                  <% end %>
                 <% else %>
-                  <%= link_to("預約", reservations_path, class: "block h-full px-4 py-6 hover:bg-rose-300 hover:text-white") %>
+                  <%= link_to(reservations_path, class: "block flex h-full items-center px-4 hover:bg-rose-300 hover:text-white") do %>
+                    <div class="mx-auto py-2">預約</div>
+                  <% end %>
                 <% end %>
               </li>
               <li class="text-xl">
                 <% if request.path == limits_path %>
-                  <%= link_to("限制", limits_path, class: "block h-full px-4 py-6 bg-rose-500 text-white") %>
+                  <%= link_to(limits_path, class: "block flex h-full items-center px-4 bg-rose-500 text-white") do %>
+                    <div class="mx-auto py-2">限制</div>
+                  <% end %>
                 <% else %>
-                  <%= link_to("限制", limits_path, class: "block h-full px-4 py-6 hover:bg-rose-300 hover:text-white") %>
+                  <%= link_to(limits_path, class: "block flex h-full items-center px-4 hover:bg-rose-300 hover:text-white") do %>
+                    <div class="mx-auto py-2">限制</div>
+                  <% end %>
                 <% end %>
               </li>
             <% end %>
           </ul>
-          <div class="relative w-48 cursor-pointer" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+          <%# 使用者 %>
+          <div id="user" class="lg:block hidden relative w-full lg:w-48 cursor-pointer" onmouseover="showUserDropdown()" onmouseout="hideUserDropdown()">
             <% if current_user.present? %>
-              <div class="text-xl px-8 py-6 text-center">
-                <a class="">
+              <div class="text-xl flex h-full items-center">
+                <div class="py-2 w-full text-center">
                   <%= current_user&.name %>
-                </a>
+                </div>
               </div>
-              <ul class="absolute w-full hidden" id="dropdown">
-                <li class="mx-1">
+              <ul class="absolute w-full hidden" id="user-dropdown">
+                <li class="">
                   <%= link_to("個人資料", profile_path, class: "block w-full h-full px-4 py-3 rounded bg-slate-100 hover:bg-slate-500 hover:text-white text-center") %>
                 </li>
-                <li class="mx-1">
+                <li class="">
                   <%= link_to(
                   "登出", 
                   logout_path, 
@@ -105,7 +142,7 @@
                 </li>
               </ul>
             <% else %>
-              <div class="text-xl px-8 py-6">
+              <div class="text-xl px-8 ">
                 <%= link_to("登入", login_path, class: "px-6 py-3 rounded-full bg-slate-300 hover:bg-slate-500 hover:text-white") %>
               </div>
             <% end %>
@@ -117,12 +154,21 @@
       </main>
     </div>
     <script>
-      function showDropdown() {
-        document.getElementById("dropdown").classList.remove("hidden");
+      // 使用者選單
+      function showUserDropdown() {
+        document.getElementById("user-dropdown").classList.remove("hidden");
       }
-      function hideDropdown() {
-        document.getElementById("dropdown").classList.add("hidden");
+      function hideUserDropdown() {
+        document.getElementById("user-dropdown").classList.add("hidden");
       }
+    </script>
+    <script>
+      // 漢堡選單
+      function toggleMenu() {
+        document.getElementById("menu").classList.toggle("hidden");
+        document.getElementById("user").classList.toggle("hidden");
+      }
+
     </script>
   </body>
 </html>
