@@ -93,6 +93,10 @@ docker exec -it <container ID> bundle exec rails db:seed
 # docker push to gcloud
 
 ```sh
+docker build -t booking .
+```
+
+```sh
 docker save booking | bzip2 | ssh enfu_liao_work@34.81.223.120 docker load
 ```
 
