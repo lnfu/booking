@@ -10,7 +10,7 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <div class="min-h-screen bg-red-500">
+    <div class="min-h-screen flex flex-col">
       <nav class="bg-slate-300">
         <div class="lg:flex lg:h-20 lg:justify-between">
           <div class="h-full flex justify-between items-center">
@@ -149,7 +149,7 @@
           </div>
         </div>
       </nav>
-      <main>
+      <main class="flex-auto bg-red-500 flex flex-col">
         <%= yield %>
       </main>
     </div>

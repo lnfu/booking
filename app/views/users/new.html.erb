@@ -1,35 +1,34 @@
-<div class="bg-slate-100 flex justify-center items-center">
-  <div class="w-7/12 hidden lg:block bg-amber-200">
-    <div class="flex items-center justify-center h-full">
-      <%= image_tag 'register.png', class: "rounded-xl" ,alt: "Register Meme" %>
-    </div>
+<div class="flex-auto bg-slate-100 flex">
+  <div class="w-7/12 flex-grow hidden lg:flex lg:items-center lg:justify-center bg-amber-200">
+    <%= image_tag 'register.png', class: "rounded-xl" ,alt: "Register Meme" %>
   </div>
-  <div class="w-full lg:w-5/12 px-32">
-    <h1 class="text-4xl mb-4">註冊</h1>
-    <div class="">
+  <div class="w-5/12 flex-grow px-6 flex items-center">
+    <div class="w-full">
+      <h1 class="mb-4 text-4xl text-gray-800">註冊</h1>
       <%= form_with(model: @user) do |form| %>
-        <div class="mb-4">
+        <%= hidden_field_tag(:login_method, 'password') %>
+        <div class="mb-6">
           <%= form.label :nick, "使用者名稱", class: "block font-bold text-gray-600 mb-1" %>
-          <%= form.text_field :nick, required: true, class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+          <%= form.text_field :nick, required: true, class: "w-full py-2 px-3 border leading-tight appearance-none rounded shadow focus:outline-none focus:shadow-outline" %>
         </div>
-        <div class="mb-4">
+        <div class="mb-6">
           <%= form.label :name, "學號", class: "block font-bold text-gray-600 mb-1" %>
-          <%= form.text_field :name, required: true, pattern: "^[a-z0-9]{1,9}$", class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+          <%= form.text_field :name, required: true, pattern: "^[a-z0-9]{1,9}$", class: "w-full py-2 px-3 border leading-tight appearance-none rounded shadow focus:outline-none focus:shadow-outline" %>
         </div>
-        <div class="mb-4">
+        <div class="mb-6">
           <%= form.label :email, "電子郵件", class: "block font-bold text-gray-600 mb-1" %>
-          <%= form.email_field :email, required: true, class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+          <%= form.email_field :email, required: true, class: "w-full py-2 px-3 border leading-tight appearance-none rounded shadow focus:outline-none focus:shadow-outline" %>
         </div>
-        <div class="mb-4">
+        <div class="mb-6">
           <%= form.label :password, "密碼", class: "block font-bold text-gray-600 mb-1" %>
-          <%= form.password_field :password, required: true, class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+          <%= form.password_field :password, required: true, class: "w-full py-2 px-3 border leading-tight appearance-none rounded shadow focus:outline-none focus:shadow-outline" %>
         </div>
-        <div class="mb-4">
+        <div class="mb-6">
           <%= form.label :password_confirmation, "確認密碼", class: "block font-bold text-gray-600 mb-1" %>
-          <%= form.password_field :password_confirmation, required: true, class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+          <%= form.password_field :password_confirmation, required: true, class: "w-full py-2 px-3 border leading-tight appearance-none rounded shadow focus:outline-none focus:shadow-outline" %>
         </div>
         <div>
-          <%= form.submit "建立帳號", class: "cursor-pointer w-full py-2 block bg-blue-500 rounded text-white" %>
+          <%= form.submit "建立帳號", class: "block w-full py-2 my-4 bg-blue-500 text-white rounded cursor-pointer" %>
         </div>
         <% flash.each do |type, msg| %>
           <div class="<%= flash_class(type) %>">
@@ -37,7 +36,12 @@
           </div>
         <% end %>
       <% end %>
-      <p class="text-center my-4"><%= link_to "回到登入頁面", login_path, class: "text-blue-500" %></p>
+      <p class="text-center"><%= link_to "回到登入頁面", login_path, class: "text-blue-500" %></p>
+      <% flash.each do |type, msg| %>
+        <div class="<%= flash_class(type) %>">
+          <%= msg %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

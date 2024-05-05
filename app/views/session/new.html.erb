@@ -1,22 +1,22 @@
-<div class="bg-slate-100 flex justify-center items-center">
-  <div class="w-7/12 hidden lg:block">
+<div class="flex-auto bg-slate-100 flex">
+  <div class="w-7/12 hidden lg:block flex-grow">
     <%= image_tag 'login.jpg', class: "object-cover w-full h-full" ,alt: "Login Meme" %>
   </div>
-  <div class="w-full lg:w-5/12 px-32">
-    <h1 class="text-4xl mb-4">登入</h1>
-    <div class="">
+  <div class="w-5/12 flex-grow px-6 flex items-center">
+    <div class="w-full">
+      <h1 class="mb-4 text-4xl text-gray-800">登入</h1>
       <%= form_tag "/login" do %>
         <%= hidden_field_tag(:login_method, 'password') %>
-        <div class="mb-4">
+        <div class="mb-6">
           <%= label_tag :name, "學號", class: "block font-bold text-gray-600 mb-1" %>
-          <%= text_field_tag :name, nil, class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+          <%= text_field_tag :name, nil, class: "w-full py-2 px-3 border leading-tight appearance-none rounded shadow focus:outline-none focus:shadow-outline" %>
         </div>
-        <div class="mb-4">
+        <div class="mb-6">
           <%= label_tag :password, "密碼", class: "block font-bold text-gray-600 mb-1" %>
-          <%= password_field_tag :password, nil, class: "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" %>
+          <%= password_field_tag :password, nil, class: "w-full py-2 px-3 border leading-tight appearance-none rounded shadow focus:outline-none focus:shadow-outline" %>
         </div>
         <div>
-          <%= submit_tag "登入", class: "cursor-pointer w-full py-2 block bg-blue-500 rounded text-white" %>
+          <%= submit_tag "登入", class: "block w-full py-2 my-4 bg-blue-500 text-white rounded cursor-pointer" %>
         </div>
         <% flash.each do |type, msg| %>
           <div class="<%= flash_class(type) %>">
@@ -24,17 +24,15 @@
           </div>
         <% end %>
       <% end %>
-      <p class="text-center text-gray-400 my-4">或是用單一入口登入</p>
+      <p class="text-center text-gray-400">或是用單一入口登入/註冊</p>
       <%= button_to(
-      "使用 NYCU 單一入口登入/註冊", 
-    login_path, method: :post, 
-    params: { login_method: 'oauth' },
-    data: {turbo: "false"}, 
-    class: "cursor-pointer w-full py-2 block bg-purple-500 rounded text-white"
-  ) %>
-    </div>
-    <div class="w-full">
-      <p class="text-center text-gray-400 my-4">還沒有帳號？<%= link_to "立即註冊", new_user_path, class: "text-blue-500" %></p>
+          "使用 NYCU 單一入口登入/註冊", 
+          login_path, method: :post, 
+          params: { login_method: 'oauth' },
+          data: {turbo: "false"}, 
+          class: "block w-full py-2 my-4 bg-indigo-500 text-white rounded cursor-pointer"
+        ) %>
+      <p class="text-center text-gray-400">還沒有帳號？<%= link_to "立即註冊", new_user_path, class: "text-blue-500" %></p>
     </div>
   </div>
 </div>
