@@ -7,9 +7,9 @@ default: &default
   timeout: 5000
   host: localhost
   port: 5432
-  database: <%= ENV.fetch("POSTGRES_DB") %>
-  username: <%= ENV.fetch("POSTGRES_USER") %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  database: <%= ENV.fetch("POSTGRES_DB", "db") %>
+  username: <%= ENV.fetch("POSTGRES_USER", "user") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "password") %>
 
 development:
   <<: *default
@@ -22,3 +22,4 @@ test:
 
 production:
   <<: *default
+  host: db # TODO

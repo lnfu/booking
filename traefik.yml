@@ -1,0 +1,28 @@
+log:
+  level: DEBUG
+
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      storage: acme.json
+      email: enfu.liao.cs10@nycu.edu.tw
+      # httpChallenge:
+      #   entryPoint: web
+      tlsChallenge:
+      # dnsChallenge:
+      #   provider: route53

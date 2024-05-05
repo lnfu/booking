@@ -4,6 +4,13 @@
 rails new booking
 ```
 
+# Credential
+
+```sh
+EDITOR="code --wait" ./bin/rails credentials:edit
+EDITOR="code --wait" ./bin/rails credentials:edit --environment production
+```
+
 # 安裝 tailwind css
 
 ```sh
@@ -58,4 +65,51 @@ psql -d database_name -U user_name -h localhost -W
 
 ```sh
 ./bin/rails g settings:install
+```
+
+# Docker 
+
+使用 `github.com/elct9620/boxing` 自動產生 Dockerfile
+
+```sh
+./bin/bundle exec boxing generate
+```
+
+補上
+
+```
+RUN apk add --no-cache libpq-dev tzdata
+```
+
+build 的那個 image 也要加上 `libpq-dev`
+
+部屬的時候如果是第一次就先 `migrate` 和 `seed`
+
+```sh
+docker exec -it <container ID> bundle exec rails db:migrate
+docker exec -it <container ID> bundle exec rails db:seed
+```
+
+# docker push to gcloud
+
+```sh
+docker save booking | bzip2 | ssh enfu_liao_work@34.81.223.120 docker load
+```
+
+# docker installation (for debian)
+
+參考官網
+
+```sh
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+$(. /etc/os-release && echo "$VERSION_CODENAME") stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+docker compose
+sudo groupadd docker
+sudo usermod -aG docker $USER
 ```

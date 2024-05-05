@@ -1,17 +1,89 @@
-# 開發用 PostgreSQL docker container
+# 遠端部屬 (使用 traefik 做 reverse proxy)
+
+networks:
+  piano-network:
+volumes:
+  db_data:
+  gem_cache:
+  shared_data:
 
 services:
+
   db:
-    image: postgres:alpine
+    image: postgres:14-alpine
     restart: always
+    container_name: db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - shared_data:/var/shared
+    networks:
+      - piano-network
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    ports: # TODO delete
+      - 5432:5432
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
 
-volumes:
-  postgres_data:
+  booking:
+    image: booking
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: booking
+    volumes:
+      - .:/var/app
+      - shared_data:/var/shared
+      - gem_cache:/usr/local/bundle/gems
+    networks:
+      - piano-network
+    stdin_open: true
+    tty: true
+    env_file: .env
+    depends_on:
+      - db
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.booking.loadbalancer.server.port=3000"
+      # http
+      - "traefik.http.routers.booking-http.rule=Host(`booking.piano.nycu.me`)"
+      - "traefik.http.routers.booking-http.entrypoints=web"
+      - "traefik.http.routers.booking-http.middlewares=https-redirect"
+      # https
+      - "traefik.http.routers.booking-https.rule=Host(`booking.piano.nycu.me`)"
+      - "traefik.http.routers.booking-https.entrypoints=websecure"
+      - "traefik.http.routers.booking-https.tls=true"
+      - "traefik.http.routers.booking-https.tls.certresolver=letsencrypt"
+
+
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--configFile=/root/traefik/traefik.yml"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yml:/root/traefik/traefik.yml
+      - ./acme.json:/acme.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=web" # web
+      - "traefik.http.routers.traefik.rule=Host(`piano.nycu.me`)"
+      - "traefik.http.routers.traefik.service=api@internal" # 內部 API 服務
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+    networks:
+      - piano-network

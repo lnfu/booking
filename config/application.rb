@@ -23,5 +23,12 @@ module Booking
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # NYCU OAuth2 登入
+    config.oauth_server = "https://id.nycu.edu.tw"
+    config.oauth_scope = "profile"
+    config.assume_ssl = false
+    config.force_ssl = false
+  
   end
 end

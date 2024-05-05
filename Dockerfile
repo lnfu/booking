@@ -1,62 +1,80 @@
-# syntax = docker/dockerfile:1
-
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
+ARG APP_ROOT=/src/app
 ARG RUBY_VERSION=3.3.0
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+ARG NODE_VERSION=21.7.1
 
-# Rails app lives here
-WORKDIR /rails
+FROM ruby:${RUBY_VERSION}-alpine AS base
+ARG APP_ROOT
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+RUN apk add --no-cache build-base postgresql-dev
 
+RUN mkdir -p ${APP_ROOT}
+COPY Gemfile Gemfile.lock ${APP_ROOT}/
 
-# Throw-away build stage to reduce size of final image
-FROM base as build
+WORKDIR ${APP_ROOT}
+RUN gem install bundler:2.5.6 \
+    && bundle config --local deployment 'true' \
+    && bundle config --local frozen 'true' \
+    && bundle config --local no-cache 'true' \
+    && bundle config --local without 'development test' \
+    && bundle install -j "$(getconf _NPROCESSORS_ONLN)" \
+    && find ${APP_ROOT}/vendor/bundle -type f -name '*.c' -delete \
+    && find ${APP_ROOT}/vendor/bundle -type f -name '*.h' -delete \
+    && find ${APP_ROOT}/vendor/bundle -type f -name '*.o' -delete \
+    && find ${APP_ROOT}/vendor/bundle -type f -name '*.gem' -delete
 
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config
+RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+FROM node:${NODE_VERSION}-alpine as node
+FROM ruby:${RUBY_VERSION}-alpine as assets
+ARG APP_ROOT
+ARG RAILS_MASTER_KEY
 
-# Copy application code
-COPY . .
+ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+RUN apk add --no-cache tzdata postgresql-libs
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
 
+COPY --from=base /usr/local/bundle/config /usr/local/bundle/config
+COPY --from=base /usr/local/bundle /usr/local/bundle
+COPY --from=base ${APP_ROOT}/vendor/bundle ${APP_ROOT}/vendor/bundle
 
-# Final stage for app image
-FROM base
+RUN mkdir -p ${APP_ROOT}
+COPY . ${APP_ROOT}
 
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libsqlite3-0 libvips && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+ENV RAILS_ENV production
+WORKDIR ${APP_ROOT}
+RUN SECRET_KEY_BASE=1 bundle exec rake assets:precompile --trace
 
-# Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
+FROM ruby:${RUBY_VERSION}-alpine
+ARG APP_ROOT
+RUN apk add --no-cache tzdata postgresql-libs
 
-# Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
+COPY --from=base /usr/local/bundle/config /usr/local/bundle/config
+COPY --from=base /usr/local/bundle /usr/local/bundle
+COPY --from=base ${APP_ROOT}/vendor/bundle ${APP_ROOT}/vendor/bundle
+COPY --from=base ${APP_ROOT}/tmp/cache ${APP_ROOT}/tmp/cache
 
-# Entrypoint prepares the database.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+RUN mkdir -p ${APP_ROOT}
 
-# Start the server by default, this can be overwritten at runtime
+ENV RAILS_ENV=production
+ENV RAILS_LOG_TO_STDOUT=true
+ENV RAILS_SERVE_STATIC_FILES=yes
+ENV APP_ROOT=$APP_ROOT
+
+COPY . ${APP_ROOT}
+COPY --from=assets /${APP_ROOT}/public /${APP_ROOT}/public
+
+# Apply Execute Permission
+RUN adduser -h ${APP_ROOT} -D -s /bin/nologin ruby ruby && \
+    chown ruby:ruby ${APP_ROOT} && \
+    chown -R ruby:ruby ${APP_ROOT}/log && \
+    chown -R ruby:ruby ${APP_ROOT}/tmp && \
+    chmod -R +r ${APP_ROOT}
+
+USER ruby
+WORKDIR ${APP_ROOT}
+
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+ENTRYPOINT ["bin/rails"]
+CMD ["server", "-b", "0.0.0.0"]

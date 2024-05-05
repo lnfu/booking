@@ -1,0 +1,56 @@
+# 本地部屬測試
+# 參考: https://gitlab.com/joannachou713/task-manager-ruby/-/blob/main/docker-compose-local.yml
+
+networks:
+  piano-network:
+volumes:
+  db_data:
+  gem_cache:
+  shared_data:
+
+services:
+
+  db:
+    image: postgres:14-alpine
+    restart: always
+    container_name: db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - shared_data:/var/shared
+    networks:
+      - piano-network
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  app:
+    image: booking
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: booking
+    volumes:
+      - .:/var/app
+      - shared_data:/var/shared
+      - gem_cache:/usr/local/bundle/gems
+    networks:
+      - piano-network
+    stdin_open: true
+    tty: true
+    env_file: .env
+    ports: # TODO delete
+      - 3000:3000
+    depends_on:
+      - db
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager

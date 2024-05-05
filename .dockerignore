@@ -1,37 +1,44 @@
-# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
+# Repo
+.git/
 
-# Ignore git directory.
-/.git/
+# Docker
+Dockerfile
+docker-compose*.yml
 
-# Ignore bundler config.
-/.bundle
+# CI/CD
+.github/
+.cache/
+.circleci/
+coverage/
+spec/
+test/
+features/
+.gitlab-ci.yml
+.travis.yml
 
-# Ignore all environment files (except templates).
-/.env*
-!/.env*.erb
+# Lint/Test
+rspec.xml
+.overcommit.yml
+.rubocop*.yml
 
-# Ignore all default key files.
+# Ruby
+.bundle/
+.env
+.env*
+
+# Rails
+log/*
+tmp/*
 /config/master.key
-/config/credentials/*.key
 
-# Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
-
-# Ignore pidfiles, but keep the directory.
-/tmp/pids/*
-!/tmp/pids/.keep
-
-# Ignore storage (uploaded files in development and any SQLite databases).
-/storage/*
-!/storage/.keep
-/tmp/storage/*
-!/tmp/storage/.keep
-
-# Ignore assets.
-/node_modules/
+# Frontend
+node_modules/
 /app/assets/builds/*
 !/app/assets/builds/.keep
-/public/assets
+
+# Licensed
+.licensed.yml
+.licenses
+
+# Boxing
+config/boxing.rb

@@ -14,36 +14,10 @@ end_times = (1..24).to_a.map { |hour| Time.zone.local(2000, 1, 1, hour, 0, 0) }
     )
 end
 
-# Rooms
-# TODO 改成真的房間資料
-Room.destroy_all
-Room.create!(
-    name: '444',
-    password: '123456',
-    color: '#000000',
-)
-
-# User
-# TODO 改成預設只有一個管理員使用者, 並且帳號密碼不明文寫
-User.destroy_all
 User.create!(
-    name: 'test_guest',
-    email: 'guest@test.com',
-    nick: 'tg',
-    password_digest: BCrypt::Password.create('test guest'),
-    role: :guest,
-)
-User.create!(
-    name: 'test_regular',
-    email: 'regular@test.com',
-    nick: 'tr',
-    password_digest: BCrypt::Password.create('test regular'),
-    role: :regular,
-)
-User.create!(
-    name: 'test_admin',
-    email: 'admin@test.com',
-    nick: 'ta',
-    password_digest: BCrypt::Password.create('test admin'),
+    name: ENV.fetch("ADMIN_USER"),
+    email: ENV.fetch("ADMIN_EMAIL"),
+    nick: ENV.fetch("ADMIN_USER"),
+    password_digest: BCrypt::Password.create(ENV.fetch("ADMIN_PASSWORD")),
     role: :admin,
 )
