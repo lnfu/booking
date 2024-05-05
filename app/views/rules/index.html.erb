@@ -1,5 +1,6 @@
-<div class="container mx-auto py-10">
-  <div class="w-1/2 mx-auto bg-white rounded-3xl py-12 px-20">
+<div class="w-full py-10">
+  <div class="w-max mx-auto py-12 px-20  bg-white rounded lg:rounded-3xl">
+    <h1 class="mb-4 text-4xl text-gray-800 lg:hidden">使用規範</h1>
     <ol class="text-xl list-decimal">
       <li class="py-2">每天最多 <%= @daily_limit == -1 ? "∞" : @daily_limit %> 個時段</li>
       <li class="py-2">每週最多 <%= @weekly_limit == -1 ? "∞" : @weekly_limit %> 個時段</li>
