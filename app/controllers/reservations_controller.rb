@@ -22,7 +22,56 @@ class ReservationsController < ApplicationController
     end
 
     def create
-        # TODO 檢查同時段是否有在別房的預約 (如果有 1. 取消別房 2. 禁止)
+        # TODO UI 要想一下怎麼提示限制
+
+        # 檢查使用者預約數量是否超過限制
+        if Setting.daily_limit != -1
+            daily_count = Reservation.where(
+                user_id: current_user.id, 
+                date: @date
+            ).count
+            p Setting.daily_limit
+            p daily_count
+
+            if daily_count >= Setting.daily_limit
+                # 超過當日上限
+                p "test"
+                return
+            end    
+        end
+
+        if Setting.weekly_limit != -1
+            weekly_count = Reservation.where(
+                user_id: current_user.id, 
+                date: @date.at_beginning_of_week..@date.at_end_of_week
+            ).count
+            if weekly_count >= Setting.weekly_limit
+                # 超過當週上限
+                return
+            end        
+        end
+
+        if Setting.monthly_limit != -1
+            monthly_count = Reservation.where(
+                user_id: current_user.id, 
+                date: @date.at_beginning_of_month..@date.at_end_of_month
+            ).count
+            if monthly_count >= Setting.monthly_limit
+                # 超過當月上限
+                return
+            end
+        end
+
+        # 檢查同時段是否有在別房的預約 (如果有就禁止)
+        simultaneous_count = Reservation.where(
+            user_id: current_user.id, 
+            date: @date,
+            time_slot_id: params[:time_slot_id]
+        ).count
+        if simultaneous_count > 0
+            return
+        end
+
         @reservation = Reservation.new(
             user_id: current_user.id,
             room_id: @room.id,
