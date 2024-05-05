@@ -1,42 +1,45 @@
-<div class="container mx-auto py-10">
-  <div class="w-min mx-auto bg-white rounded-3xl py-12 px-16">
+<div class="w-full py-10">
+  <div class="mx-10 lg:w-1/2 lg:mx-auto py-6 px-8 bg-white rounded lg:rounded-3xl">
+    <h1 class="mb-4 text-4xl text-gray-800 text-center lg:hidden">限制</h1>
     <%= form_with url: limits_path, method: :put, html: { class: "w-full text-left border-collapse" } do |f| %>
-      <tbody>
-        <tr>
-          <td>
-            <div class="flex items-center py-2">
-              <div class="w-48"><%= f.label :daily_limit, "當日最大預約限制" %></div>
-              <%= f.check_box :daily_limit_enabled, checked: @daily_limit != -1, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
-              <div><%= f.number_field :daily_limit, value: @daily_limit, step: 1, min: 0, max: 99, disabled: @daily_limit == -1, class: "input-field w-20 mx-4 rounded" %></div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="flex items-center py-2">
-              <div class="w-48"><%= f.label :weekly_limit, "當週最大預約限制" %></div>
-              <%= f.check_box :weekly_limit_enabled, checked: @weekly_limit != -1, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
-              <div><%= f.number_field :weekly_limit, value: @weekly_limit, step: 1, min: 0, max: 99, disabled: @weekly_limit == -1, class: "input-field w-20 mx-4 rounded" %></div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="flex items-center py-2">
-              <div class="w-48"><%= f.label :monthly_limit, "當月最大預約限制" %></div>
-              <%= f.check_box :monthly_limit_enabled, checked: @monthly_limit != -1, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
-              <div><%= f.number_field :monthly_limit, value: @monthly_limit, step: 1, min: 0, max: 99, disabled: @monthly_limit == -1, class: "input-field w-20 mx-4 rounded" %></div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="py-2">
-              <%= f.submit "更新", class: "cursor-pointer w-full py-2 block bg-blue-500 rounded text-white" %>
-            </div>
-          </td>
-        </tr>
-      </tbody>
+      <table class="w-full table-fixed mx-auto">
+        <tbody>
+          <tr>
+            <td>
+              <div class="flex items-center py-2">
+                <div class="flex-auto"><%= f.label :daily_limit, "當日最大預約限制" %></div>
+                <%= f.check_box :daily_limit_enabled, checked: @daily_limit != -1, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
+                <div><%= f.number_field :daily_limit, value: @daily_limit, step: 1, min: 0, max: 99, disabled: @daily_limit == -1, class: "input-field w-20 mx-4 rounded" %></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="flex items-center py-2">
+                <div class="flex-auto"><%= f.label :weekly_limit, "當週最大預約限制" %></div>
+                <%= f.check_box :weekly_limit_enabled, checked: @weekly_limit != -1, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
+                <div><%= f.number_field :weekly_limit, value: @weekly_limit, step: 1, min: 0, max: 99, disabled: @weekly_limit == -1, class: "input-field w-20 mx-4 rounded" %></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="flex items-center py-2">
+                <div class="flex-auto"><%= f.label :monthly_limit, "當月最大預約限制" %></div>
+                <%= f.check_box :monthly_limit_enabled, checked: @monthly_limit != -1, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
+                <div><%= f.number_field :monthly_limit, value: @monthly_limit, step: 1, min: 0, max: 99, disabled: @monthly_limit == -1, class: "input-field w-20 mx-4 rounded" %></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="py-2">
+                <%= f.submit "更新", class: "cursor-pointer w-full py-2 block bg-blue-500 rounded text-white" %>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     <% end %>
   </div>
 </div>

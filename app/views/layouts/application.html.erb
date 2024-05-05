@@ -30,11 +30,11 @@
               <li class="text-xl">
                 <% if request.path == board_path(room_name) %>
                   <%= link_to(board_path(room_name), class: "block flex h-full items-center px-4 bg-blue-500 text-white") do %>
-                    <%= room_name %>
+                    <div class="mx-auto py-2"><%= room_name %></div>
                   <% end %>
                 <% else %>
                   <%= link_to(board_path(room_name), class: "block flex h-full items-center px-4 hover:bg-blue-300 hover:text-white") do %>
-                    <%= room_name %>
+                    <div class="mx-auto py-2"><%= room_name %></div>
                   <% end %>
                 <% end %>
               </li>
@@ -168,7 +168,6 @@
         document.getElementById("menu").classList.toggle("hidden");
         document.getElementById("user").classList.toggle("hidden");
       }
-
     </script>
   </body>
 </html>

@@ -1,9 +1,9 @@
-<div class="container mx-auto py-10">
-  <div class="w-full bg-white rounded-3xl py-12">
+<div class="w-full py-10">
+  <div class="w-full mx-10 lg:w-auto lg:mx-32 py-2 px-2 lg:py-12 lg:px-16 bg-white rounded lg:rounded-3xl">
     <table class="w-full text-left border-collapse text-center">
       <thead>
         <tr>
-          <th class="pb-2">
+          <th class="min-w-28">
             <div class="">
               <%= link_to(raw("&#9665;"), board_path(@room.name, date_to_str(@target_date - 7)), class: "text-decoration-none text-dark display-6") %>
               &nbsp;
@@ -12,7 +12,7 @@
             </div>
           </th>
           <% @week_dates.each do |week_date| %>
-            <th class="pb-2 w-48">
+            <th class="min-w-32">
               <div class="text-xl font-bold"><%= week_date.strftime("%A") %></div>
               <div class="font-light"><%= week_date.strftime('%Y-%m-%d') %></div>
             </th>
@@ -22,7 +22,7 @@
       <tbody>
         <% @time_slots.each do |time_slot| %>
           <tr class="hover:bg-slate-200">
-            <td class="h-10"><%= "#{time_slot.start_at.strftime("%H:%M")} - #{time_slot.end_at.strftime("%H:%M")}" %></td>
+            <td class="h-10 w-28"><%= "#{time_slot.start_at.strftime("%H:%M")} - #{time_slot.end_at.strftime("%H:%M")}" %></td>
             <% @data.each do |day| %>
               <td class="h-10">
                 <% reservation = day[time_slot] %>
@@ -72,6 +72,6 @@
     </table>
   </div>
 </div>
-<footer class="absolute bottom-0 py-2 w-full text-center">
+<footer class="py-2 w-full text-center">
   <span>&copy; 2024 Enfu Liao. All rights reserved.</span>
 </footer>

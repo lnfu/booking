@@ -1,6 +1,6 @@
-<div class="container mx-auto py-10">
-  <div class="w-full bg-white rounded-3xl py-12 px-16">
-    <table class="w-full text-left border-collapse">
+<div class="w-full py-10">
+  <div class="mx-10 lg:mx-32 py-2 px-2 lg:py-12 lg:px-16 bg-white rounded lg:rounded-3xl">
+    <table class="w-full table-fixed text-left border-collapse">
       <thead>
         <tr>
           <th class="pb-4 text-xl">琴房</th>
@@ -22,18 +22,18 @@
             <td class="py-2"><%= room.color %></td>
             <td class="py-2 text-right">
               <% if current_user&.admin? %>
-                <div>
+                <div class="flex flex-col lg:flex-row">
                   <%= 
                     link_to "編輯", 
                     edit_room_path(room),
-                    class: "bg-blue-500 px-3 py-2 rounded text-white"
+                    class: "block w-14 px-3 py-2 rounded bg-blue-500 text-white"
                   %>
                   <%= 
                     link_to "刪除", 
                     room, 
                     method: :delete,
                     data: { turbo_method: :delete, turbo_confirm: "確定刪除？" },
-                    class: "bg-red-500 px-3 py-2 rounded text-white"
+                    class: "block w-14 px-3 py-2 rounded bg-red-500 text-white"
                   %>
                 </div>
               <% end %>
