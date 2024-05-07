@@ -14,23 +14,40 @@ class BoardsController < ApplicationController
     end
 
     def show
-        @data = Array.new(7, Hash.new())
-
         @time_slots = TimeSlot.all.order(start_at: :asc)
-
         @week_dates = (@target_date.beginning_of_week..@target_date.end_of_week).to_a
-        @week_dates.each do |week_date|
-            @data[week_date.cwday - 1] = { "date" => week_date } # 紀錄該日的日期
-        end
+        # TODO 也許 @week_dates 也放到 cache? (但是因為沒有查 db, 所以好像也不會慢)
 
-        # TODO 驗證 @room 在資料庫
-        reservations = Reservation.where(
-            room_id: @room.id,
-            date: @week_dates
-        )
-        reservations.each do |reservation|
-            @data[reservation.date.cwday - 1].store(reservation.time_slot, reservation) # 紀錄該日的所有時段的預約
+        if Rails.cache.exist?(@target_date.beginning_of_week.to_s())
+            p "cache hit"
+            @data = Rails.cache.read(@target_date.beginning_of_week.to_s)
+
+        else
+
+            p "cache miss"
+            # 從資料庫拿
+            @data = Array.new(7, Hash.new())
+
+            @week_dates.each do |week_date|
+                @data[week_date.cwday - 1] = { "date" => week_date } # 紀錄該日的日期
+            end
+    
+            # TODO 驗證 @room 在資料庫
+            reservations = Reservation.where(
+                room_id: @room.id,
+                date: @week_dates
+            )
+            reservations.each do |reservation|
+                @data[reservation.date.cwday - 1].store(reservation.time_slot, reservation) # 紀錄該日的所有時段的預約
+            end    
+
+            Rails.cache.write(@target_date.beginning_of_week.to_s, @data, expires_in: 1.hour)
+
+
+
         end
+        
+
     end
 
     private
