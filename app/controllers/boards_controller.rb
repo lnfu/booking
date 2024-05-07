@@ -19,12 +19,9 @@ class BoardsController < ApplicationController
         # TODO 也許 @week_dates 也放到 cache? (但是因為沒有查 db, 所以好像也不會慢)
 
         if Rails.cache.exist?(@target_date.beginning_of_week.to_s())
-            p "cache hit"
             @data = Rails.cache.read(@target_date.beginning_of_week.to_s)
 
         else
-
-            p "cache miss"
             # 從資料庫拿
             @data = Array.new(7, Hash.new())
 
@@ -42,12 +39,7 @@ class BoardsController < ApplicationController
             end    
 
             Rails.cache.write(@target_date.beginning_of_week.to_s, @data, expires_in: 1.hour)
-
-
-
         end
-        
-
     end
 
     private

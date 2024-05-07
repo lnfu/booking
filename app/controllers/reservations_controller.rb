@@ -5,6 +5,7 @@ class ReservationsController < ApplicationController
     before_action :set_user, only: %i[ index ]
     before_action :require_login
     before_action :require_non_guest
+    after_action :delete_cache, only: %i[ create destroy ]
 
     def index
         # includes 會做 JOIN 避免 N + 1 query
@@ -88,7 +89,8 @@ class ReservationsController < ApplicationController
 
     def destroy    
         # 不能刪除以前的預約
-        if @reservation.date < Date.today || (@reservation.date == Date.today && Time.parse(@reservation.time_slot.start_at.strftime("%H:%M:%S"))  < Time.parse(Time.now.strftime("%H:%M:%S")))
+        @date = @reservation.date # 為了 delete_cache 可以用 @date
+        if @date < Date.today || (@date == Date.today && Time.parse(@reservation.time_slot.start_at.strftime("%H:%M:%S"))  < Time.parse(Time.now.strftime("%H:%M:%S")))
             redirect_to url_for(request.env["HTTP_REFERER"] || root_path), alert: "Failed to destroy the reservation."
         else
             # 確認是本人 or 管理員
@@ -118,5 +120,10 @@ class ReservationsController < ApplicationController
 
     def set_user
         @user = User.find(params[:user_id]) if params[:user_id].present?
+    end
+
+    def delete_cache
+        # 刪除快取  
+        Rails.cache.delete(@date.beginning_of_week.to_s)
     end
 end

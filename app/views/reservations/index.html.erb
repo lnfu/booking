@@ -3,7 +3,9 @@
     <table class="w-full text-left border-collapse">
       <thead>
         <tr>
-          <th class="pb-2 text-xl">使用者</th>
+          <% unless @user %>
+            <th class="pb-2 text-xl">使用者</th>
+          <% end %>
           <th class="pb-2 text-xl">琴房</th>
           <th class="pb-2 text-xl">日期</th>
           <th class="pb-2 text-xl">時段</th>
@@ -14,11 +16,13 @@
         <% if @reservations.present? %>
           <% @reservations.each do |reservation| %>
             <tr class="border-t border-slate-200">
-              <td class="py-2">
-                <div class="px-2 py-1">
-                  <%= reservation.user.name %>
-                </div>
-              </td>
+              <% unless @user %>
+                <td class="py-2">
+                  <div class="px-2 py-1">
+                    <%= reservation.user.name %>
+                  </div>
+                </td>
+              <% end %>
               <td class="py-2 text-white">
                 <div class="w-min rounded px-2 py-1" style=<%= "background-color:" + reservation.room.color + ";" %>>
                   <%= reservation.room.name %>
