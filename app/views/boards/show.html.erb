@@ -13,22 +13,74 @@
               <%= link_to(raw("&#9654;"), board_path(@room.name, date_to_str(@target_date + 7)), class: "text-decoration-none text-dark display-6") %>
             </div>
           </th>
-          <% @week_dates.each do |week_date| %>
-            <% if week_date == @target_date %>
-              <th class="min-w-32 bg-blue-500 text-white">
-              <% else %>
-                <th class="min-w-32">
-                <% end %>
+          <% if mobile_device? %>
+            <th class="min-w-32 bg-blue-500 text-white">
+              <div class="text-xl font-bold"><%= @target_date.strftime("%A") %></div>
+              <div class="font-light"><%= @target_date.strftime('%Y-%m-%d') %></div>
+            </th>
+          <% else %>
+            <% @week_dates.each do |week_date| %>
+              <% if week_date == @target_date %>
+                <th class="min-w-32 bg-blue-500 text-white">
+                <% else %>
+                  <th class="min-w-32">
+                  <% end %>
                   <div class="text-xl font-bold"><%= week_date.strftime("%A") %></div>
                   <div class="font-light"><%= week_date.strftime('%Y-%m-%d') %></div>
                 </th>
               <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <% @time_slots.each do |time_slot| %>
-              <tr class>
-                <td class="h-10 w-28"><%= "#{time_slot.start_at.strftime("%H:%M")} - #{time_slot.end_at.strftime("%H:%M")}" %></td>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @time_slots.each do |time_slot| %>
+            <tr class>
+              <td class="h-10 w-28"><%= "#{time_slot.start_at.strftime("%H:%M")} - #{time_slot.end_at.strftime("%H:%M")}" %></td>
+              <%# 預約 %>
+              <% if mobile_device? %>
+                <% day = @data[@target_date.wday] %>
+                <td class="h-10">
+                  <% reservation = day[time_slot] %>
+                  <% if current_user.blank? %>
+                    <%# 沒登入, read-only %>
+                    <%= reservation&.user&.nick %>
+                  <% elsif day["date"] < Date.today || (day["date"] == Date.today && Time.parse(time_slot.start_at.strftime("%H:%M:%S")) < Time.parse(Time.now.strftime("%H:%M:%S"))) %>
+                    <%# 以前, read-only %>
+                    <%= reservation&.user&.nick %>
+                  <% else %>
+                    <% if reservation.blank? %>
+                      <%# 可以預約 %>
+                      <%= link_to(
+                  "預約",
+                  reservations_path(
+                  room_id: @room.id,
+                  time_slot_id: time_slot.id,
+                  date: day["date"].to_s
+                  ),
+                  method: :post,
+                  data: {
+                  turbo_method: :post
+                  },
+                  class: "block leading-10 h-full hover:text-white bg-blue-100 hover:bg-blue-500"
+                  )%>
+                    <% elsif reservation.user == current_user %>
+                      <%# 自己預約的, 可以取消 %>
+                      <%= link_to(
+                  "取消",
+                  reservation,
+                  method: :delete,
+                  data: {
+                    turbo_method: :delete
+                  },
+                  class: "block leading-10 h-full hover:text-white bg-red-100 hover:bg-blue-500"
+                  )
+                  %>
+                    <% else %>
+                      <%= reservation&.user&.nick %>
+                    <% end %>
+                  <% end %>
+                </td>
+              <% else %>
                 <% @data.each do |day| %>
                   <td class="h-10">
                     <% reservation = day[time_slot] %>
@@ -72,12 +124,13 @@
                     <% end %>
                   </td>
                 <% end %>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-    <footer class="py-2 w-full text-center">
-      <span>&copy; 2024 Enfu Liao. All rights reserved.</span>
-    </footer>
+  </div>
+  <footer class="py-2 w-full text-center">
+    <span>&copy; 2024 Enfu Liao. All rights reserved.</span>
+  </footer>

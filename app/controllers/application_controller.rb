@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
     helper_method :current_user
     helper_method :date_to_str
+    helper_method :mobile_device?
 
     protected
 
     def mobile_device?
-        request.user_agent =~ /Mobile|webOS/
+        return request.user_agent =~ /Mobile|webOS/
     end
 
     def current_user
