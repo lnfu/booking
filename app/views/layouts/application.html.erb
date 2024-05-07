@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Booking</title>
+    <title>琴房預約系統 | 交大鋼琴社</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= favicon_link_tag asset_path('logo.ico') %>
     <%= javascript_importmap_tags %>
   </head>
   <body>
@@ -16,7 +17,7 @@
           <div class="h-full flex justify-between items-center">
             <%# 回主畫面 %>
             <%= link_to(root_path, class: "py-2") do %>
-              <img class="h-12 mx-5" src="https://fakeimg.pl/300">
+              <%= image_tag 'logo.jpg', class: "h-14 mx-5" ,alt: "Logo" %>
             <% end %>
             <%# 漢堡 %>
             <button id="burger" class="py-2 lg:hidden" onclick="toggleMenu()">
