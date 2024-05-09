@@ -18,11 +18,6 @@
         <div>
           <%= submit_tag "登入", class: "block w-full py-2 my-4 bg-blue-500 text-white rounded cursor-pointer" %>
         </div>
-        <% flash.each do |type, msg| %>
-          <div class="<%= flash_class(type) %>">
-            <%= msg %>
-          </div>
-        <% end %>
       <% end %>
       <p class="text-center text-gray-400">或是用單一入口登入/註冊</p>
       <%= button_to(

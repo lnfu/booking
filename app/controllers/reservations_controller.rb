@@ -81,9 +81,9 @@ class ReservationsController < ApplicationController
         )
 
         if @reservation.save
-            redirect_to board_path(@room.name, "#{@date.year}-#{@date.month}-#{@date.day}"), notice: "Reservation was successfully created."
+            redirect_to board_path(@room.name, "#{@date.year}-#{@date.month}-#{@date.day}"), notice: "預約成功" # i18n: Reservation was successfully created.
         else
-            redirect_to board_path(@room.name, "#{@date.year}-#{@date.month}-#{@date.day}"), notice: "Failed to create reservation."
+            redirect_to board_path(@room.name, "#{@date.year}-#{@date.month}-#{@date.day}"), alert: "預約失敗" # i18n: Failed to create reservation.
         end
     end
 
@@ -91,14 +91,14 @@ class ReservationsController < ApplicationController
         # 不能刪除以前的預約
         @date = @reservation.date # 為了 delete_cache 可以用 @date
         if @date < Date.today || (@date == Date.today && Time.parse(@reservation.time_slot.start_at.strftime("%H:%M:%S"))  < Time.parse(Time.now.strftime("%H:%M:%S")))
-            redirect_to url_for(request.env["HTTP_REFERER"] || root_path), alert: "Failed to destroy the reservation."
+            redirect_to url_for(request.env["HTTP_REFERER"] || root_path), alert: "刪除失敗，禁止刪除已經過時的預約" # i18n
         else
             # 確認是本人 or 管理員
             if current_user.admin? || current_user == @reservation.user
                 if @reservation.destroy
-                    redirect_to url_for(request.env["HTTP_REFERER"] || root_path), notice: "Reservation was successfully destroyed."  # TODO i18n
+                    redirect_to url_for(request.env["HTTP_REFERER"] || root_path), notice: "刪除成功"  # i18n: Reservation was successfully destroyed.
                 else
-                    redirect_to url_for(request.env["HTTP_REFERER"] || root_path), alert: "Failed to destroy the reservation." # TODO i18n
+                    redirect_to url_for(request.env["HTTP_REFERER"] || root_path), alert: "刪除失敗" # i18n: Failed to destroy the reservation.
                 end    
             end
         end

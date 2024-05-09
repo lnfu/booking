@@ -11,8 +11,8 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <div class="min-h-screen flex flex-col">
-      <nav class="bg-slate-300">
+    <div class="relative min-h-screen flex flex-col">
+      <nav class="sticky top-0 z-10 bg-slate-300">
         <div class="lg:flex lg:h-20 lg:justify-between">
           <div class="h-full flex justify-between items-center">
             <%# 回主畫面 %>
@@ -152,9 +152,16 @@
           </div>
         </div>
       </nav>
-      <main class="flex-auto flex flex-col bg-slate-100">
+      <main class="relative flex-auto flex flex-col bg-slate-100">
         <%= yield %>
+        <% flash.each do |type, msg| %>
+          <div class="<%= flash_class(type) %>" role="alert">
+            <span class="block sm:inline"><%= msg %></span>
+          </div>
+        <% end %>
+
       </main>
+
     </div>
     <script>
       // 使用者選單

@@ -17,29 +17,37 @@ class TimeSlotsController < ApplicationController
         # TODO 檢查時段重疊
 
         if @time_slot.save
-            redirect_to time_slot_url(@time_slot), notice: "Time slot was successfully created." # TODO i18n
+            redirect_to time_slot_url, notice: "新增成功" # i18n: Time slot was successfully created.
         else
+            flash.now[:alert] = "新增失敗" # i18n
             render :new, status: :unprocessable_entity
         end
+
     end
 
     def destroy
+
         if @time_slot.destroy
-            redirect_to time_slots_url, notice: "Time slot was successfully destroyed." # TODO i18n
+            redirect_to time_slots_url, notice: "刪除成功" # i18n: Time slot was successfully destroyed.
         else
-            redirect_to time_slots_url, alert: "Failed to destroy the time slot." # TODO i18n
+            flash.now[:alert] = "刪除失敗" # i18n
+            render :index, status: :unprocessable_entity # i18n: Failed to destroy the time slot.
         end
+
     end
 
     def edit
     end
 
     def update
+
         if @time_slot.update(time_slot_params)
-            redirect_to time_slots_url, notice: "Time slot was successfully updated." # TODO i18n
+            redirect_to time_slots_url, notice: "更新成功" # TODO i18n: Time slot was successfully updated.
         else
-            redirect_to time_slots_url, alert: "Failed to update the time slot." # TODO i18n
+            flash.now[:alert] = "更新失敗" # i18n: Failed to update the time slot.
+            render :index, status: :unprocessable_entity
         end
+
     end
 
     private

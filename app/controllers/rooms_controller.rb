@@ -18,17 +18,19 @@ class RoomsController < ApplicationController
         # TODO 檢查時段重疊
 
         if @room.save
-            redirect_to rooms_url, notice: "Room was successfully created." # TODO i18n
+            redirect_to rooms_url, notice: "新增成功" # i18n: Room was successfully created.
         else
+            flash.now[:alert] = "新增失敗" # i18n
             render :new, status: :unprocessable_entity
         end
     end
 
     def destroy
         if @room.destroy
-            redirect_to rooms_url, notice: "Room was successfully destroyed." # TODO i18n
+            redirect_to rooms_url, notice: "刪除成功" # i18n: Room was successfully destroyed.
         else
-            redirect_to rooms_url, alert: "Failed to destroy the room." # TODO i18n
+            flash.now[:alert] = "刪除失敗" # i18n
+            render :index, status: :unprocessable_entity # i18n: Failed to destroy the room.
         end
     end
 
@@ -37,9 +39,10 @@ class RoomsController < ApplicationController
 
     def update
         if @room.update(room_params)
-            redirect_to rooms_url, notice: "Room was successfully updated." # TODO i18n
+            redirect_to rooms_url, notice: "更新成功" # TODO i18n: Room was successfully updated.
         else
-            redirect_to rooms_url, alert: "Failed to update the room." # TODO i18n
+            flash.now[:alert] = "更新失敗" # i18n: Failed to update the room.
+            render :index, status: :unprocessable_entity
         end
     end
 

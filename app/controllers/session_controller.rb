@@ -12,7 +12,8 @@ class SessionController < ApplicationController
                 if !!user && user.authenticate(params[:password])
                     create_session(user.id)
                 else
-                    redirect_to login_path, alert: "Incorrect student ID or password."
+                    flash.now[:alert] = "帳號或密碼錯誤" # i18n: Incorrect student ID or password.
+                    render :new, status: :unauthorized
                 end
             when "oauth"
                 redirect_to(authorization_url, allow_other_host: true)
@@ -22,7 +23,7 @@ class SessionController < ApplicationController
     def destroy
         reset_session
         # 回到登入頁面
-        redirect_to login_path, notice: "Logout successfully."
+        redirect_to login_path, notice: "登出成功" # i18n: Logout successfully.
     end    
 
     def callback
@@ -88,7 +89,7 @@ class SessionController < ApplicationController
     
     def create_session(id)
         session[:user_id] = id
-        redirect_to (session.delete(:return_to) || root_path), notice: "Login successfully."
+        redirect_to (session.delete(:return_to) || root_path), notice: "登入成功" # i18n: Login successfully.
     end
     
 end

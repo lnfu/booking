@@ -30,18 +30,8 @@
         <div>
           <%= form.submit "建立帳號", class: "block w-full py-2 my-4 bg-blue-500 text-white rounded cursor-pointer" %>
         </div>
-        <% flash.each do |type, msg| %>
-          <div class="<%= flash_class(type) %>">
-            <%= msg %>
-          </div>
-        <% end %>
       <% end %>
       <p class="text-center"><%= link_to "回到登入頁面", login_path, class: "text-blue-500" %></p>
-      <% flash.each do |type, msg| %>
-        <div class="<%= flash_class(type) %>">
-          <%= msg %>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>

@@ -8,7 +8,7 @@ class ProfileController < ApplicationController
     # TODO 和 user controller 整合？
     def update
         if @user.update(user_params)
-            redirect_to profile_path, notice: "Profile was successfully updated."
+            redirect_to profile_path, notice: "成功更新個人資料" # i18n: Profile was successfully updated.
         else
             render :show
         end

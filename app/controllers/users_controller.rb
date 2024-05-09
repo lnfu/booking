@@ -37,28 +37,35 @@ class UsersController < ApplicationController
 
         if @user.save
             # 回到登入頁面
-            redirect_to login_path, notice: "User was successfully created." # TODO i18n
+            redirect_to login_path, notice: "註冊成功" # TODO i18n: User was successfully created.
         else
+            flash.now[:alert] = "註冊失敗" # i18n: 
             render :new, status: :unprocessable_entity
         end
     end
 
     def destroy
+
         if current_user == @user
             if @user.destroy
                 reset_session # 如果把自己刪除, 就要登出
                 # 回到登入頁面
-                redirect_to login_path, notice: "Your account has been successfully deleted. You have been logged out." # TODO i18n
+                redirect_to login_path, notice: "刪除成功，您已登出。" # i18n: Your account has been successfully deleted. You have been logged out.
             else
-                redirect_to users_url, alert: "Failed to destroy the user." # TODO i18n
+                flash.now[:alert] = "刪除失敗" # i18n: Failed to destroy the user.
+                render :index, status: :unprocessable_entity
             end
         else
             if @user.destroy
-                redirect_to users_url, notice: "User was successfully destroyed." # TODO i18n
+                redirect_to users_url, notice: "刪除成功" # i18n: User was successfully destroyed.
             else
-                redirect_to users_url, alert: "Failed to destroy the user." # TODO i18n
+                flash.now[:alert] = "刪除失敗" # i18n: Failed to destroy the user.
+                render :index, status: :unprocessable_entity
             end    
         end
+
+        # TODO 刪除使用者的預約
+
     end
 
     def promote_to_regular
@@ -66,7 +73,8 @@ class UsersController < ApplicationController
             @user.update(role: :regular)
             redirect_to users_url, notice: "User promoted to regular successfully."
         else
-            redirect_to users_url, alert: "Only guests can be promoted to regular users."
+            flash.now[:alert] = "Only guests can be promoted to regular users." # i18n: 
+            render :index, status: :unprocessable_entity
         end
     end
     
@@ -75,7 +83,8 @@ class UsersController < ApplicationController
             @user.update(role: :admin)
             redirect_to users_url, notice: "User promoted to admin successfully."
         else
-            redirect_to users_url, alert: "Only regular users can be promoted to admin users."
+            flash.now[:alert] = "Only regular users can be promoted to admin users." # i18n: 
+            render :index, status: :unprocessable_entity
         end
     end
 
@@ -101,8 +110,8 @@ class UsersController < ApplicationController
             UserMailer.forgot_password_email(@user).deliver_now
             redirect_to forgot_password_path, notice: "Password reset instructions have been sent to your email."
         else
-            flash.now[:alert] = "Student ID not found."
-            render :forgot_password_form
+            flash.now[:alert] = "找不到使用者" # i18n: Student ID not found.
+            render :forgot_password_form, status: :unprocessable_entity
         end
     end
 
@@ -122,7 +131,7 @@ class UsersController < ApplicationController
             password_reset_token: nil,
             password_reset_token_expire_at: nil
         )
-            redirect_to login_path, notice: "Password was successfully updated."
+            redirect_to login_path, notice: "重設密碼成功" # i18n: Password was successfully updated.
         else
             render :reset_password_form
         end
@@ -141,7 +150,8 @@ class UsersController < ApplicationController
     def validate_token
         @token = params[:token]
         @user = User.find(params[:id])
-        redirect_to login_path, alert: "Invalid or expired reset password link." if @user.blank? || 
+        # i18n: Invalid or expired reset password link.
+        redirect_to login_path, alert: "連結無效" if @user.blank? || 
             @token.blank? || @user.password_reset_token.blank? || 
             @user.password_reset_token_expire_at.blank? || 
             @token != @user.password_reset_token || 

@@ -28,7 +28,7 @@ class LimitsController < ApplicationController
         Setting.weekly_limit = @weekly_limit if Setting.weekly_limit != @weekly_limit
         Setting.monthly_limit = @monthly_limit if Setting.monthly_limit != @monthly_limit
 
-        redirect_to limits_path, notice: "Limits were successfully updated."
+        redirect_to limits_path, notice: "成功更新限制" # i18n: Limits were successfully updated.
 
     end
 end

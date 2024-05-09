@@ -2,11 +2,11 @@ module ApplicationHelper
     def flash_class(type)
         case type
         when 'alert'
-          'text-red-600' # 紅色
+          'absolute top-0 w-full px-4 py-3 rounded border bg-red-100  border-red-400 text-red-700' # 紅色
         when 'notice'
-          'text-blue-600' # 藍色
+          'absolute top-0 w-full px-4 py-3 rounded border bg-blue-100  border-blue-400 text-blue-700' # 藍色
         else
-          'text-black' # 預設黑色
+          'absolute top-0 w-full px-4 py-3 rounded border bg-slate-100  border-slate-400 text-slate-700' # 預設灰
         end
     end
 end
