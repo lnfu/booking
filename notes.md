@@ -27,6 +27,12 @@ EDITOR="code --wait" ./bin/rails credentials:edit --environment production
 ./bin/rails g model Reservation time_slot:references room:references user:references date:date 
 ```
 
+## 忘記密碼
+```sh
+./bin/rails g migration AddPasswordResetFieldsToUsers password_reset_token:string password_reset_token_expire_at:datetime
+./bin/rails g mailer UserMailer
+```
+
 # PostreSQL docker
 
 ```sh

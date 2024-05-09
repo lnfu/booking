@@ -75,4 +75,5 @@ gem "rails-settings-cached", "~> 2.9"
 
 group :development do
   gem 'boxing'
+
 end

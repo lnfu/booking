@@ -5,6 +5,7 @@ class ProfileController < ApplicationController
     def show
     end
 
+    # TODO 和 user controller 整合？
     def update
         if @user.update(user_params)
             redirect_to profile_path, notice: "Profile was successfully updated."

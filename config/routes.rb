@@ -34,4 +34,9 @@ Rails.application.routes.draw do
     get :limits, to: "limits#index" 
     put :limits, to: "limits#update" 
     
+    # 忘記密碼
+    get "/forgot-password", to: "users#forgot_password_form"
+    post "/forgot-password", to: "users#forgot_password"
+    get "/reset-password", to: "users#reset_password_form"
+    post "/reset-password", to: "users#reset_password"
 end
