@@ -1,6 +1,6 @@
 <div class="w-full lg:py-10">
-  <div class=" lg:mx-32 py-2 px-2 lg:py-12 lg:px-16 bg-white rounded lg:rounded-3xl">
-    <table class="w-full text-left border-collapse">
+  <div class=" lg:mx-32 py-2 px-2 lg:py-12 lg:px-16 bg-white rounded lg:rounded-3xl shadow-md overflow-x-auto">
+    <table class="table-auto w-full text-left">
       <thead>
         <tr>
           <th class="pb-2 text-xl">名稱</th>
@@ -31,21 +31,21 @@
                 <%= time_slot.end_at.strftime("%H:%M") %>
               </div>
             </td>
-            <td class="py-2 text-right">
-              <div>
-                <%= 
+            <td class="py-2 text-right min-w-28">
+              <%= 
               link_to "編輯", 
               edit_time_slot_path(time_slot),
-              class: "bg-blue-500 px-3 py-2 rounded text-white"
-            %>
-                <%= 
+              class: "block w-fit px-3 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white"
+              %>
+            </td>
+            <td class="py-2 text-right min-w-28">
+              <%= 
               link_to "刪除", 
               time_slot, 
               method: :delete,
               data: { turbo_method: :delete, turbo_confirm: "確定刪除？" },
-              class: "bg-red-500 px-3 py-2 rounded text-white"
-            %>
-              </div>
+              class: "block w-fit px-3 py-2 rounded bg-red-500 hover:bg-red-600 text-white"
+              %>
             </td>
           </tr>
         <% end %>

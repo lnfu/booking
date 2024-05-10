@@ -1,6 +1,6 @@
 <div class="w-full lg:py-10">
-  <div class=" lg:mx-32 py-2 px-2 lg:py-12 lg:px-16 bg-white rounded lg:rounded-3xl">
-    <table class="w-full table-fixed text-left border-collapse">
+  <div class=" lg:mx-32 py-2 px-2 lg:py-12 lg:px-16 bg-white rounded lg:rounded-3xl shadow-md overflow-x-auto">
+    <table class="table-auto w-full text-left">
       <thead>
         <tr>
           <th class="pb-4 text-xl">學號</th>
@@ -24,28 +24,28 @@
                 <%= user.nick %>
               </div>
             </td>
-            <td class="py-2 overflow-hidden">
+            <td class="py-2">
               <div class="px-2 py-1">
                 <%= user.email %>
               </div>
             </td>
-            <td class="py-2 text-center">
+            <td class="py-2 text-center min-w-28">
               <% if user.guest? %>
                 <%= link_to "啟用帳號",
               promote_to_regular_user_path(user.id),
               method: :patch,
               data: { turbo_method: :patch, turbo_confirm: "確定？" },
-              class: "block w-14 px-3 py-2 rounded bg-green-300 text-green-800"
+              class: "block w-fit px-3 py-2 rounded bg-green-300 hover:bg-green-400 text-green-800"
           %>
               <% end %>
             </td>
-            <td class="py-2 text-center min-w-14">
+            <td class="py-2 text-center min-w-28">
               <% if user.regular? %>
                 <%= link_to "設為管理員",
               promote_to_admin_user_path(user.id),
               method: :patch,
               data: { turbo_method: :patch, turbo_confirm: "確定？" },
-              class: "block w-14 px-3 py-2 rounded bg-indigo-600 text-white"
+              class: "block w-fit px-3 py-2 rounded bg-indigo-500 hover:bg-indigo-600 text-white"
           %>
               <% elsif user.guest? %>
                 尚未啟用
@@ -53,13 +53,13 @@
                 管理員   
               <% end %>
             </td>
-            <td class="py-2 min-w-14">
+            <td class="py-2 min-w-28">
                 <%= 
               link_to "刪除", 
               user, 
               method: :delete,
               data: { turbo_method: :delete, turbo_confirm: "確定刪除？" },
-              class: "block w-14 px-3 py-2 rounded bg-red-500 text-white"
+              class: "block w-fit px-3 py-2 rounded bg-red-500 hover:bg-red-600 text-white"
             %>
             </td>
           </tr>
