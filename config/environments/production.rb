@@ -93,6 +93,12 @@ Rails.application.configure do
   #   "example.com",     # Allow requests from example.com
   #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
   # ]
+  config.hosts = [
+    "booking.piano.nycu.me"
+  ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Gmail
+  config.action_mailer.default_url_options = { host: 'booking.piano.nycu.me' }
 end

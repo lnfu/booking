@@ -99,7 +99,7 @@ docker exec -it <container ID> bundle exec rails db:seed
 # docker push to gcloud
 
 ```sh
-docker build -t booking .
+docker build -t booking --build-arg="GMAIL_SENDER=" --build-arg="GMAIL_PASSWORD=" .
 ```
 
 ```sh
