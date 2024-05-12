@@ -101,4 +101,5 @@ Rails.application.configure do
 
   # Gmail
   config.action_mailer.default_url_options = { host: 'booking.piano.nycu.me' }
+
 end

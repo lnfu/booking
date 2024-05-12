@@ -45,6 +45,8 @@ services:
     stdin_open: true
     tty: true
     env_file: .env
+    environment:
+      - TZ=Asia/Taipei
     depends_on:
       - db
     deploy:

@@ -14,7 +14,8 @@ class BoardsController < ApplicationController
     end
 
     def show
-        @time_slots = TimeSlot.all.order(start_at: :asc)
+        @time_slots = TimeSlot.all.sort_by { |time_slot| [time_slot.start_at.hour, time_slot.start_at.min, time_slot.start_at.sec] }
+
         @week_dates = (@target_date.beginning_of_week..@target_date.end_of_week).to_a
         # TODO 也許 @week_dates 也放到 cache? (但是因為沒有查 db, 所以好像也不會慢)
 

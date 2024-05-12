@@ -4,8 +4,8 @@ require 'bcrypt'
 # 因為時區問題, 要使用 zone.local
 TimeSlot.destroy_all
 names = (1..24).to_a.map(&:to_s)
-start_times = (0..23).to_a.map { |hour| Time.zone.local(2000, 1, 1, hour, 0, 0) }
-end_times = (1..24).to_a.map { |hour| Time.zone.local(2000, 1, 1, hour, 0, 0) }
+start_times = (0..23).to_a.map { |hour| Time.new(0, 1, 1, hour, 0, 0) }
+end_times = (1..24).to_a.map { |hour| Time.new(0, 1, 1, hour, 0, 0) }
 24.times do |i|
     TimeSlot.create!(
         name: names[i],
