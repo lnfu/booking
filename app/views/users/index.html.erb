@@ -32,25 +32,45 @@
             <td class="py-2 text-center min-w-28">
               <% if user.guest? %>
                 <%= link_to "啟用帳號",
-              promote_to_regular_user_path(user.id),
-              method: :patch,
-              data: { turbo_method: :patch, turbo_confirm: "確定？" },
-              class: "block w-fit px-3 py-2 rounded bg-green-300 hover:bg-green-400 text-green-800"
-          %>
+                promote_to_regular_user_path(user.id),
+                method: :patch,
+                data: { turbo_method: :patch, turbo_confirm: "確定？" },
+                class: "block w-fit px-3 py-2 rounded bg-green-300 hover:bg-green-400 text-green-800"
+                %>
               <% end %>
             </td>
             <td class="py-2 text-center min-w-28">
               <% if user.regular? %>
                 <%= link_to "設為管理員",
-              promote_to_admin_user_path(user.id),
-              method: :patch,
-              data: { turbo_method: :patch, turbo_confirm: "確定？" },
-              class: "block w-fit px-3 py-2 rounded bg-indigo-500 hover:bg-indigo-600 text-white"
-          %>
+                promote_to_admin_user_path(user.id),
+                method: :patch,
+                data: { turbo_method: :patch, turbo_confirm: "確定？" },
+                class: "block w-fit px-3 py-2 rounded bg-indigo-500 hover:bg-indigo-600 text-white"
+                %>
               <% elsif user.guest? %>
                 尚未啟用
               <% elsif user.admin? %>
                 管理員   
+              <% end %>
+            </td>
+            <td class="py-2 text-center min-w-28">
+              <% if !user.guest? %>
+                <%= link_to "退社",
+                demote_to_guest_user_path(user.id),
+                method: :patch,
+                data: { turbo_method: :patch, turbo_confirm: "確定？" },
+                class: "block w-fit px-3 py-2 rounded bg-red-300 hover:bg-red-400 text-red-800"
+                %>
+              <% end %>
+            </td>
+            <td class="py-2 text-center min-w-28">
+              <% if !user.guest? %>
+                <%= link_to "清除所有預約",
+                clear_reservations_path(user.id),
+                method: :patch,
+                data: { turbo_method: :delete, turbo_confirm: "這會刪除該使用者的所有預約紀錄，確定要清除嗎？" },
+                class: "block w-fit px-3 py-2 rounded bg-slate-300 hover:bg-slate-400 text-slate-800"
+                %>
               <% end %>
             </td>
             <td class="py-2 min-w-28">

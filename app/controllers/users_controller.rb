@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-    before_action :set_user, only: %i[ destroy promote_to_regular promote_to_admin ]
     before_action :require_login, except: %i[ new create forgot_password_form forgot_password reset_password_form reset_password]
     before_action :require_non_guest, except: %i[ pending ]
-    # before_action :require_admin
+    before_action :require_admin, except: %i[ new create forgot_password_form forgot_password reset_password_form reset_password pending ]
+    before_action :set_user, only: %i[ destroy promote_to_regular promote_to_admin demote_to_guest clear_reservations ]
 
     def index
         @users = User.all.order(:role)
@@ -46,25 +46,28 @@ class UsersController < ApplicationController
 
     def destroy
 
-        if current_user == @user
-            if @user.destroy
-                reset_session # 如果把自己刪除, 就要登出
-                # 回到登入頁面
-                redirect_to login_path, notice: "刪除成功，您已登出。" # i18n: Your account has been successfully deleted. You have been logged out.
-            else
-                flash.now[:alert] = "刪除失敗" # i18n: Failed to destroy the user.
-                render :index, status: :unprocessable_entity
-            end
+        reservations = Reservation.where(user_id: @user.id)
+        if reservations.any?
+            redirect_to users_url, alert: "請先清除該使用的所有預約" # i18n: 
         else
-            if @user.destroy
-                redirect_to users_url, notice: "刪除成功" # i18n: User was successfully destroyed.
-            else
-                flash.now[:alert] = "刪除失敗" # i18n: Failed to destroy the user.
-                render :index, status: :unprocessable_entity
-            end    
-        end
 
-        # TODO 刪除使用者的預約
+            if current_user == @user
+                if @user.destroy
+                    reset_session # 如果把自己刪除, 就要登出
+                    # 回到登入頁面
+                    redirect_to login_path, notice: "刪除成功，您已登出。" # i18n: Your account has been successfully deleted. You have been logged out.
+                else
+                    redirect_to users_url, alert: "刪除失敗" # i18n: Failed to destroy the user.
+                end
+            else
+                if @user.destroy
+                    redirect_to users_url, notice: "刪除成功" # i18n: User was successfully destroyed.
+                else
+                    redirect_to users_url, alert: "刪除失敗" # i18n: Failed to destroy the user.
+                end    
+            end
+
+        end
 
     end
 
@@ -73,8 +76,7 @@ class UsersController < ApplicationController
             @user.update(role: :regular)
             redirect_to users_url, notice: "User promoted to regular successfully."
         else
-            flash.now[:alert] = "Only guests can be promoted to regular users." # i18n: 
-            render :index, status: :unprocessable_entity
+            redirect_to users_url, alert: "Only guests can be promoted to regular users." # i18n: 
         end
     end
     
@@ -83,8 +85,16 @@ class UsersController < ApplicationController
             @user.update(role: :admin)
             redirect_to users_url, notice: "User promoted to admin successfully."
         else
-            flash.now[:alert] = "Only regular users can be promoted to admin users." # i18n: 
-            render :index, status: :unprocessable_entity
+            redirect_to users_url, alert: "Only regular users can be promoted to admin users." # i18n: 
+        end
+    end
+
+    def demote_to_guest
+        if @user.guest?
+            redirect_to users_url, alert: "Only non-guest users can be demoted to guest users." # i18n: 
+        else
+            @user.update(role: :guest)
+            redirect_to users_url, notice: "User demoted to guest successfully."
         end
     end
 
@@ -133,7 +143,20 @@ class UsersController < ApplicationController
         )
             redirect_to login_path, notice: "重設密碼成功" # i18n: Password was successfully updated.
         else
+            flash.now[:alert] = "重設密碼失敗" # i18n:
             render :reset_password_form
+        end
+    end
+
+    def clear_reservations
+        p @user.nick
+
+        reservations = Reservation.where(user_id: @user.id)
+        
+        if reservations.destroy_all
+            redirect_to users_path, notice: "已成功刪除 #{@user.name} 的所有預約"
+        else
+            redirect_to users_url, notice: "刪除 #{@user.name} 的預約失敗" # i18n: 
         end
     end
 

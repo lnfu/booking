@@ -17,6 +17,7 @@ Rails.application.routes.draw do
         member do
             patch "promote_to_regular"
             patch "promote_to_admin"
+            patch "demote_to_guest"
         end
         resources :reservations
     end
@@ -39,4 +40,9 @@ Rails.application.routes.draw do
     post "/forgot-password", to: "users#forgot_password"
     get "/reset-password", to: "users#reset_password_form"
     post "/reset-password", to: "users#reset_password"
+
+    delete '/users/:id/clear_reservations', 
+        to: 'users#clear_reservations', 
+        as: 'clear_reservations'
+
 end
